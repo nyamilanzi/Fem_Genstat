@@ -1,32 +1,43 @@
-# Fem_Genstat
----
+# FemAnalytica: Gender-Disaggregated Data Analysis Platform
 
-# Gender Health Data Analysis Dashboard
-
-This project provides a comprehensive analysis of health outcomes, barriers to care, and chronic conditions using survey data. The analysis is performed using Python, with interactive visualizations and statistical tests available via a Streamlit web app.
+Fem-Genstat is a powerful, user-friendly platform designed for NGOs and researchers to perform gender-disaggregated data analysis. The platform enables users to upload their own datasets, perform statistical analyses, and generate professional reports with a focus on gender differences.
 
 ## Features
 
-- **Data Merging & Cleaning:** Combines health and demographic data, applies correct label mappings.
-- **Statistical Analysis:**  
-  - Health check frequency by gender  
-  - Barriers to care by gender  
-  - Chronic conditions by gender, region, and education level  
-  - Statistical significance testing (t-test, Mann-Whitney U, Chi-square)
-- **Interactive Dashboard:**  
-  - Built with Streamlit  
-  - Filter by gender, region, and education level  
-  - Visualize distributions and group differences
-- **Automated PDF Reporting:**  
-  - Generates a professional PDF report with summary statistics, plots, and narratives
+- **Data Upload & Processing**
+  - Support for CSV file uploads
+  - Automatic data type detection
+  - Flexible variable selection
+  - Custom gender value mapping
 
-## Data
+- **Statistical Analysis**
+  - Gender-disaggregated descriptive statistics
+  - Statistical testing (t-test, Mann-Whitney U, chi-square)
+  - Automatic test selection based on data type
+  - Sample size requirements checking
 
-- `health_data.csv`: Contains health check, barriers to care, and chronic condition data.
-- `demographics.csv`: Contains gender, age, region, and education level data.
+- **Visualization Options**
+  - Violin plots
+  - Box plots
+  - Bar charts
+  - Scatter plots
+  - Pie charts
+  - Heatmaps
+  - Support for grouping by additional variables (e.g., region, education)
 
-### Label Mappings
+- **Report Generation**
+  - Professional PDF and Word document outputs
+  - Professional reports 
+  - Statistical summaries and narratives
+  - Multiple visualization options
 
-- **Gender:** 1 = Female, 2 = Male
-- **Region:** 1 = North, 2 = Central, 3 = South
-- **Education Level:** 1 = None, 2 = Primary, 3 = Secondary, 4 = Tertiary
+## Requirements
+
+- Python 3.8+
+- Streamlit
+- Pandas
+- Seaborn
+- Matplotlib
+- SciPy
+- ReportLab
+- python-docx
