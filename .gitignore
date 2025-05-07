@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+*.env
+.env
+.venv
+venv/
+ENV/
+Pipfile.lock
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints
+
+# VSCode/Editor
+.vscode/
+*.code-workspace
+
+# Mac system files
+.DS_Store
+
+# Log and cache files
+*.log
+*.cache
+.cache/
+*.sqlite3
+
+# Streamlit temp
+.streamlit/config.toml

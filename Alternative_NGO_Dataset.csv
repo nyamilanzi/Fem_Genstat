@@ -1,0 +1,401 @@
+ParticipantID,Gender,Age,Region,ProgramType,HealthKnowledgeScore,MonthlySavings,HouseholdSanitationScore,AttendedAllSessions,ReportedEmpowerment,SatisfactionRating
+1,Male,36,Southern,Women's Economic Empowerment,,98.99,,Yes,No,8.7
+2,Female,40,Central,Community Sanitation,,,3.3,No,Yes,4.9
+3,Male,25,Central,Adolescent Health,37.1,,,No,Yes,6.9
+4,Male,30,Southern,Women's Economic Empowerment,,111.33,,Yes,Yes,9.7
+5,Male,15,Central,Adolescent Health,43.3,,,No,Yes,5.0
+6,Male,18,Central,Women's Economic Empowerment,,160.62,,Yes,Yes,8.2
+7,Male,32,Southern,Community Sanitation,,,1.1,No,No,4.5
+8,Female,34,Central,Adolescent Health,54.1,,,Yes,Yes,7.7
+9,Female,22,Central,Community Sanitation,,,2.0,No,No,3.4
+10,Male,22,Northern,Community Sanitation,,,2.9,No,No,9.0
+11,Female,38,Central,Women's Economic Empowerment,,66.25,,No,No,1.5
+12,Female,36,Northern,Community Sanitation,,,3.5,Yes,No,5.1
+13,Male,34,Southern,Community Sanitation,,,2.5,No,Yes,9.9
+14,Female,37,Southern,Adolescent Health,65.5,,,No,Yes,2.3
+15,Male,29,Southern,Adolescent Health,48.9,,,Yes,Yes,1.9
+16,Female,44,Southern,Community Sanitation,,,3.0,Yes,Yes,4.0
+17,Male,34,Central,Women's Economic Empowerment,,56.28,,No,No,2.2
+18,Female,20,Central,Adolescent Health,61.5,,,Yes,Yes,7.1
+19,Female,16,Central,Community Sanitation,,,1.1,No,Yes,6.5
+20,Male,20,Southern,Adolescent Health,44.6,,,No,No,5.7
+21,Male,24,Southern,Women's Economic Empowerment,,115.7,,Yes,No,9.7
+22,Male,32,Southern,Women's Economic Empowerment,,34.22,,No,Yes,3.8
+23,Female,18,Northern,Adolescent Health,58.4,,,No,Yes,5.0
+24,Female,28,Central,Adolescent Health,55.7,,,Yes,Yes,5.2
+25,Female,40,Southern,Community Sanitation,,,4.7,No,Yes,7.3
+26,Male,16,Northern,Adolescent Health,64.4,,,Yes,Yes,3.0
+27,Female,36,Southern,Community Sanitation,,,1.6,No,No,7.8
+28,Male,44,Central,Community Sanitation,,,1.8,Yes,Yes,2.7
+29,Male,21,Southern,Adolescent Health,51.4,,,Yes,Yes,9.8
+30,Male,41,Northern,Women's Economic Empowerment,,120.15,,No,Yes,9.6
+31,Male,44,Central,Community Sanitation,,,3.7,No,No,4.6
+32,Female,32,Central,Community Sanitation,,,3.7,Yes,Yes,8.9
+33,Female,36,Northern,Adolescent Health,64.9,,,No,No,4.5
+34,Female,31,Northern,Adolescent Health,56.5,,,No,Yes,5.9
+35,Male,38,Central,Women's Economic Empowerment,,111.39,,Yes,Yes,7.7
+36,Male,31,Southern,Adolescent Health,51.3,,,No,Yes,7.8
+37,Female,27,Central,Community Sanitation,,,2.0,Yes,Yes,9.0
+38,Male,41,Central,Adolescent Health,65.0,,,Yes,Yes,5.2
+39,Male,34,Northern,Community Sanitation,,,3.4,Yes,No,6.3
+40,Female,31,Southern,Adolescent Health,44.9,,,No,Yes,6.1
+41,Male,43,Central,Adolescent Health,55.8,,,No,Yes,5.6
+42,Female,21,Southern,Adolescent Health,66.7,,,No,Yes,7.3
+43,Male,17,Northern,Adolescent Health,51.8,,,No,Yes,3.3
+44,Female,22,Southern,Women's Economic Empowerment,,58.46,,No,Yes,1.6
+45,Female,25,Southern,Community Sanitation,,,4.3,Yes,Yes,5.7
+46,Female,20,Central,Women's Economic Empowerment,,77.86,,Yes,Yes,4.9
+47,Male,29,Central,Adolescent Health,62.8,,,No,No,5.7
+48,Male,32,Northern,Women's Economic Empowerment,,74.41,,Yes,No,6.5
+49,Male,15,Northern,Adolescent Health,74.4,,,Yes,Yes,4.3
+50,Male,15,Central,Community Sanitation,,,3.7,No,Yes,3.8
+51,Female,17,Central,Community Sanitation,,,4.8,Yes,Yes,7.1
+52,Female,21,Northern,Women's Economic Empowerment,,110.73,,Yes,Yes,4.6
+53,Male,20,Southern,Women's Economic Empowerment,,141.24,,Yes,No,8.5
+54,Male,30,Northern,Community Sanitation,,,1.1,No,Yes,7.9
+55,Female,44,Northern,Adolescent Health,59.5,,,Yes,No,9.1
+56,Male,29,Southern,Adolescent Health,63.1,,,No,Yes,1.9
+57,Female,44,Central,Community Sanitation,,,3.5,No,No,2.4
+58,Male,43,Central,Women's Economic Empowerment,,123.6,,No,No,6.5
+59,Male,24,Central,Adolescent Health,72.6,,,Yes,Yes,7.4
+60,Female,32,Southern,Adolescent Health,46.9,,,No,Yes,2.9
+61,Male,20,Southern,Community Sanitation,,,2.7,Yes,No,1.2
+62,Female,34,Southern,Women's Economic Empowerment,,80.1,,Yes,Yes,8.8
+63,Male,41,Central,Adolescent Health,66.0,,,No,No,8.0
+64,Female,21,Northern,Women's Economic Empowerment,,94.52,,Yes,Yes,9.3
+65,Male,19,Southern,Women's Economic Empowerment,,89.52,,Yes,Yes,3.6
+66,Male,41,Southern,Women's Economic Empowerment,,144.11,,Yes,No,5.6
+67,Male,22,Northern,Adolescent Health,52.8,,,Yes,Yes,7.5
+68,Male,28,Southern,Women's Economic Empowerment,,66.34,,No,No,6.6
+69,Female,32,Southern,Adolescent Health,60.2,,,No,No,1.1
+70,Male,29,Central,Community Sanitation,,,2.4,No,No,5.6
+71,Male,21,Northern,Adolescent Health,60.8,,,Yes,Yes,9.8
+72,Female,15,Southern,Adolescent Health,53.3,,,No,Yes,3.1
+73,Female,34,Central,Community Sanitation,,,3.5,Yes,Yes,5.1
+74,Female,16,Central,Adolescent Health,64.8,,,No,Yes,8.3
+75,Female,18,Northern,Adolescent Health,79.5,,,Yes,Yes,3.4
+76,Male,15,Central,Community Sanitation,,,1.7,No,Yes,4.7
+77,Male,23,Northern,Community Sanitation,,,4.2,No,No,7.2
+78,Male,28,Northern,Adolescent Health,60.5,,,Yes,Yes,5.0
+79,Male,20,Central,Adolescent Health,65.2,,,No,No,9.6
+80,Female,32,Central,Adolescent Health,66.9,,,No,No,8.7
+81,Female,35,Central,Community Sanitation,,,1.9,No,No,3.6
+82,Male,34,Southern,Adolescent Health,73.4,,,Yes,Yes,1.0
+83,Male,17,Central,Adolescent Health,61.0,,,Yes,Yes,5.8
+84,Male,17,Central,Women's Economic Empowerment,,62.24,,No,No,8.7
+85,Male,28,Southern,Women's Economic Empowerment,,67.49,,No,Yes,9.2
+86,Female,15,Northern,Adolescent Health,67.3,,,Yes,Yes,2.1
+87,Male,29,Northern,Community Sanitation,,,2.3,Yes,Yes,9.0
+88,Female,17,Southern,Community Sanitation,,,4.3,Yes,No,5.5
+89,Female,42,Southern,Adolescent Health,92.7,,,Yes,No,9.8
+90,Male,41,Southern,Community Sanitation,,,1.5,No,No,8.2
+91,Female,29,Central,Adolescent Health,60.7,,,No,Yes,2.5
+92,Female,29,Southern,Adolescent Health,48.3,,,No,No,5.7
+93,Female,15,Central,Community Sanitation,,,3.0,No,Yes,8.9
+94,Male,33,Northern,Adolescent Health,53.9,,,Yes,No,8.3
+95,Female,38,Central,Community Sanitation,,,3.9,Yes,Yes,9.7
+96,Female,40,Northern,Women's Economic Empowerment,,111.44,,Yes,No,8.5
+97,Female,15,Central,Adolescent Health,47.7,,,No,Yes,9.9
+98,Male,18,Northern,Women's Economic Empowerment,,110.42,,No,Yes,5.7
+99,Male,24,Central,Adolescent Health,68.0,,,Yes,Yes,6.4
+100,Male,42,Southern,Community Sanitation,,,1.6,No,Yes,1.6
+101,Female,38,Central,Women's Economic Empowerment,,85.41,,Yes,Yes,4.5
+102,Male,30,Southern,Women's Economic Empowerment,,150.22,,No,No,3.8
+103,Male,31,Northern,Women's Economic Empowerment,,128.84,,No,Yes,9.3
+104,Female,25,Southern,Women's Economic Empowerment,,117.3,,No,No,4.0
+105,Female,42,Northern,Community Sanitation,,,2.7,No,No,9.0
+106,Female,29,Central,Adolescent Health,63.4,,,Yes,Yes,3.2
+107,Male,30,Northern,Community Sanitation,,,4.3,No,No,6.2
+108,Female,36,Southern,Women's Economic Empowerment,,44.7,,Yes,Yes,5.8
+109,Female,42,Southern,Adolescent Health,68.3,,,Yes,Yes,1.9
+110,Male,35,Northern,Women's Economic Empowerment,,118.83,,Yes,Yes,3.9
+111,Male,21,Southern,Women's Economic Empowerment,,103.77,,Yes,Yes,9.9
+112,Female,15,Central,Adolescent Health,54.1,,,Yes,No,6.4
+113,Female,22,Northern,Women's Economic Empowerment,,112.3,,No,No,8.4
+114,Male,28,Central,Women's Economic Empowerment,,101.57,,No,No,7.5
+115,Female,44,Central,Community Sanitation,,,1.7,Yes,Yes,9.1
+116,Female,39,Central,Women's Economic Empowerment,,139.63,,No,No,4.1
+117,Female,39,Central,Women's Economic Empowerment,,96.57,,Yes,Yes,3.0
+118,Female,42,Southern,Community Sanitation,,,4.8,No,No,1.6
+119,Female,16,Southern,Women's Economic Empowerment,,68.24,,Yes,No,8.6
+120,Female,31,Central,Community Sanitation,,,1.5,Yes,Yes,5.7
+121,Female,41,Southern,Community Sanitation,,,4.5,Yes,No,7.5
+122,Male,16,Central,Community Sanitation,,,2.8,No,Yes,1.6
+123,Female,22,Southern,Adolescent Health,62.4,,,Yes,Yes,8.6
+124,Female,20,Central,Women's Economic Empowerment,,97.75,,No,No,6.2
+125,Female,34,Southern,Community Sanitation,,,3.0,Yes,Yes,2.1
+126,Female,31,Central,Community Sanitation,,,2.8,Yes,Yes,5.5
+127,Male,19,Central,Community Sanitation,,,3.9,No,Yes,6.4
+128,Male,39,Central,Adolescent Health,79.2,,,No,No,4.1
+129,Male,35,Central,Women's Economic Empowerment,,118.57,,Yes,Yes,7.4
+130,Female,40,Southern,Women's Economic Empowerment,,93.05,,Yes,No,6.2
+131,Female,34,Northern,Women's Economic Empowerment,,93.72,,No,Yes,8.6
+132,Male,20,Southern,Community Sanitation,,,2.2,Yes,No,8.8
+133,Male,32,Southern,Women's Economic Empowerment,,122.78,,No,Yes,1.6
+134,Female,29,Northern,Community Sanitation,,,5.0,No,No,6.8
+135,Female,39,Central,Women's Economic Empowerment,,155.06,,No,Yes,7.5
+136,Male,15,Northern,Women's Economic Empowerment,,144.45,,Yes,Yes,2.3
+137,Male,40,Southern,Women's Economic Empowerment,,119.38,,Yes,Yes,9.0
+138,Male,43,Southern,Adolescent Health,62.9,,,No,No,8.7
+139,Female,16,Central,Adolescent Health,70.5,,,No,Yes,2.3
+140,Male,36,Northern,Women's Economic Empowerment,,134.52,,No,No,8.9
+141,Female,43,Northern,Women's Economic Empowerment,,83.35,,No,No,6.8
+142,Female,42,Southern,Women's Economic Empowerment,,108.22,,No,Yes,8.1
+143,Male,43,Northern,Women's Economic Empowerment,,77.93,,Yes,Yes,8.2
+144,Male,23,Southern,Community Sanitation,,,2.2,Yes,No,2.5
+145,Female,23,Central,Adolescent Health,64.0,,,No,No,1.6
+146,Male,35,Northern,Women's Economic Empowerment,,57.66,,Yes,Yes,6.7
+147,Female,37,Central,Adolescent Health,58.6,,,Yes,No,4.0
+148,Female,39,Central,Community Sanitation,,,5.0,Yes,Yes,3.3
+149,Female,29,Central,Adolescent Health,64.9,,,Yes,Yes,2.2
+150,Female,26,Central,Women's Economic Empowerment,,41.72,,Yes,No,8.7
+151,Male,22,Southern,Women's Economic Empowerment,,87.19,,No,Yes,6.1
+152,Female,40,Northern,Community Sanitation,,,4.9,No,No,8.5
+153,Male,30,Northern,Women's Economic Empowerment,,172.03,,Yes,No,6.0
+154,Female,44,Central,Women's Economic Empowerment,,112.89,,Yes,No,1.4
+155,Male,27,Northern,Women's Economic Empowerment,,143.85,,No,Yes,3.0
+156,Male,17,Central,Women's Economic Empowerment,,109.07,,Yes,No,8.4
+157,Female,15,Northern,Women's Economic Empowerment,,110.82,,No,No,2.7
+158,Female,15,Central,Adolescent Health,74.3,,,Yes,Yes,9.2
+159,Male,24,Central,Community Sanitation,,,3.7,No,Yes,3.9
+160,Female,24,Southern,Adolescent Health,57.9,,,Yes,Yes,4.8
+161,Female,27,Northern,Women's Economic Empowerment,,113.11,,Yes,Yes,7.0
+162,Female,25,Southern,Community Sanitation,,,4.3,Yes,Yes,8.2
+163,Male,20,Southern,Community Sanitation,,,3.0,No,Yes,7.9
+164,Female,18,Northern,Adolescent Health,78.4,,,Yes,Yes,8.3
+165,Female,20,Southern,Community Sanitation,,,4.4,No,Yes,5.6
+166,Female,20,Central,Adolescent Health,67.5,,,Yes,Yes,3.9
+167,Female,33,Central,Women's Economic Empowerment,,146.42,,Yes,Yes,2.9
+168,Male,17,Northern,Adolescent Health,69.9,,,Yes,No,9.6
+169,Male,41,Central,Adolescent Health,55.2,,,No,No,6.2
+170,Female,22,Northern,Adolescent Health,75.1,,,No,Yes,9.7
+171,Female,34,Southern,Women's Economic Empowerment,,85.87,,No,Yes,5.4
+172,Male,32,Central,Adolescent Health,42.6,,,Yes,Yes,4.4
+173,Male,34,Southern,Community Sanitation,,,1.7,Yes,No,6.5
+174,Female,44,Central,Adolescent Health,62.7,,,Yes,No,9.9
+175,Male,24,Central,Community Sanitation,,,2.3,Yes,Yes,8.8
+176,Male,34,Northern,Community Sanitation,,,1.5,Yes,No,4.7
+177,Male,37,Northern,Women's Economic Empowerment,,145.88,,Yes,Yes,1.4
+178,Female,29,Northern,Adolescent Health,75.1,,,Yes,No,4.7
+179,Male,17,Northern,Adolescent Health,33.3,,,No,No,7.8
+180,Female,34,Southern,Community Sanitation,,,3.8,No,Yes,1.0
+181,Female,32,Northern,Community Sanitation,,,2.4,Yes,Yes,8.5
+182,Male,40,Southern,Community Sanitation,,,3.3,Yes,No,3.3
+183,Male,44,Central,Adolescent Health,74.6,,,No,No,4.3
+184,Male,23,Southern,Women's Economic Empowerment,,65.17,,No,Yes,9.3
+185,Female,31,Central,Adolescent Health,57.2,,,Yes,Yes,4.4
+186,Male,33,Central,Community Sanitation,,,4.5,Yes,No,5.3
+187,Male,18,Southern,Women's Economic Empowerment,,71.36,,No,Yes,5.0
+188,Female,22,Northern,Women's Economic Empowerment,,77.09,,Yes,Yes,4.3
+189,Male,41,Southern,Adolescent Health,58.1,,,No,No,1.7
+190,Male,24,Southern,Adolescent Health,57.2,,,Yes,Yes,4.8
+191,Female,42,Central,Community Sanitation,,,4.5,No,Yes,5.4
+192,Male,25,Central,Women's Economic Empowerment,,76.94,,Yes,No,3.0
+193,Male,33,Northern,Women's Economic Empowerment,,93.58,,No,Yes,8.4
+194,Female,22,Northern,Adolescent Health,44.5,,,Yes,Yes,5.5
+195,Male,24,Northern,Women's Economic Empowerment,,102.35,,No,No,3.1
+196,Male,30,Central,Adolescent Health,70.7,,,No,No,1.9
+197,Male,22,Northern,Women's Economic Empowerment,,108.0,,Yes,Yes,6.2
+198,Male,32,Southern,Adolescent Health,65.4,,,No,No,5.3
+199,Female,41,Southern,Community Sanitation,,,2.1,No,Yes,7.4
+200,Male,35,Northern,Community Sanitation,,,1.8,No,No,9.9
+201,Female,28,Northern,Women's Economic Empowerment,,72.12,,No,No,2.8
+202,Female,27,Southern,Adolescent Health,61.9,,,No,No,7.6
+203,Male,41,Northern,Adolescent Health,68.5,,,Yes,Yes,4.9
+204,Male,29,Central,Community Sanitation,,,4.8,No,Yes,4.6
+205,Male,42,Central,Adolescent Health,61.6,,,Yes,Yes,3.6
+206,Female,44,Southern,Women's Economic Empowerment,,75.01,,Yes,No,4.2
+207,Male,22,Central,Community Sanitation,,,2.7,No,No,2.1
+208,Male,35,Central,Community Sanitation,,,4.1,No,No,5.1
+209,Male,30,Central,Community Sanitation,,,4.3,Yes,Yes,6.3
+210,Female,22,Central,Women's Economic Empowerment,,113.27,,No,Yes,3.5
+211,Male,23,Northern,Adolescent Health,64.5,,,Yes,Yes,5.1
+212,Male,41,Central,Adolescent Health,53.9,,,Yes,Yes,5.2
+213,Male,31,Southern,Women's Economic Empowerment,,126.02,,No,Yes,6.9
+214,Female,17,Northern,Adolescent Health,69.2,,,Yes,No,6.3
+215,Male,38,Southern,Women's Economic Empowerment,,119.15,,No,Yes,9.5
+216,Female,35,Central,Community Sanitation,,,3.1,No,Yes,5.7
+217,Female,18,Northern,Women's Economic Empowerment,,129.33,,No,Yes,6.5
+218,Female,22,Northern,Community Sanitation,,,2.4,Yes,Yes,5.8
+219,Female,34,Northern,Community Sanitation,,,1.5,No,Yes,4.1
+220,Male,38,Central,Adolescent Health,65.2,,,Yes,Yes,2.5
+221,Female,15,Southern,Adolescent Health,73.7,,,No,Yes,1.1
+222,Female,28,Northern,Adolescent Health,71.1,,,Yes,No,3.0
+223,Female,22,Southern,Adolescent Health,60.7,,,No,Yes,6.0
+224,Female,21,Southern,Adolescent Health,47.2,,,No,Yes,1.2
+225,Male,44,Northern,Adolescent Health,53.2,,,Yes,Yes,3.9
+226,Male,39,Central,Adolescent Health,66.5,,,Yes,Yes,1.4
+227,Female,21,Central,Community Sanitation,,,2.6,Yes,No,7.2
+228,Female,30,Southern,Community Sanitation,,,4.1,Yes,No,5.6
+229,Female,25,Northern,Women's Economic Empowerment,,53.87,,No,No,9.0
+230,Female,39,Southern,Adolescent Health,75.0,,,Yes,Yes,6.7
+231,Female,15,Southern,Women's Economic Empowerment,,107.36,,No,Yes,7.3
+232,Male,43,Central,Adolescent Health,45.7,,,No,No,8.9
+233,Male,36,Central,Adolescent Health,60.8,,,Yes,Yes,9.1
+234,Female,34,Central,Community Sanitation,,,2.0,Yes,Yes,4.3
+235,Female,33,Northern,Community Sanitation,,,3.4,No,No,6.3
+236,Female,30,Northern,Women's Economic Empowerment,,92.96,,No,Yes,4.6
+237,Male,35,Northern,Community Sanitation,,,1.5,Yes,Yes,6.1
+238,Female,34,Northern,Women's Economic Empowerment,,103.05,,Yes,No,9.5
+239,Male,34,Central,Adolescent Health,57.5,,,No,No,9.9
+240,Male,24,Southern,Adolescent Health,70.7,,,Yes,No,5.2
+241,Male,38,Central,Adolescent Health,72.2,,,Yes,Yes,1.6
+242,Female,32,Southern,Community Sanitation,,,2.1,No,Yes,9.6
+243,Female,23,Northern,Community Sanitation,,,2.2,No,Yes,2.1
+244,Female,15,Northern,Community Sanitation,,,2.8,No,No,1.2
+245,Male,16,Central,Community Sanitation,,,2.3,No,Yes,7.3
+246,Female,35,Northern,Community Sanitation,,,1.7,No,No,8.6
+247,Male,38,Central,Women's Economic Empowerment,,121.15,,Yes,No,6.6
+248,Male,33,Southern,Adolescent Health,52.2,,,Yes,Yes,6.3
+249,Female,43,Northern,Community Sanitation,,,1.3,No,No,4.0
+250,Female,30,Southern,Women's Economic Empowerment,,134.93,,No,No,6.6
+251,Female,42,Central,Adolescent Health,58.1,,,Yes,Yes,8.4
+252,Male,42,Central,Adolescent Health,68.8,,,No,Yes,3.9
+253,Female,35,Southern,Community Sanitation,,,1.3,Yes,No,5.1
+254,Female,39,Northern,Adolescent Health,63.7,,,Yes,No,6.8
+255,Male,34,Northern,Community Sanitation,,,2.0,Yes,Yes,8.0
+256,Male,35,Central,Adolescent Health,56.6,,,No,No,6.7
+257,Male,40,Central,Adolescent Health,65.1,,,Yes,Yes,2.4
+258,Female,21,Central,Women's Economic Empowerment,,118.64,,Yes,Yes,5.8
+259,Male,17,Northern,Women's Economic Empowerment,,114.24,,Yes,No,4.9
+260,Female,22,Southern,Women's Economic Empowerment,,84.35,,No,Yes,6.8
+261,Female,38,Southern,Community Sanitation,,,3.9,No,Yes,6.8
+262,Male,30,Northern,Community Sanitation,,,4.5,No,No,1.9
+263,Male,22,Southern,Women's Economic Empowerment,,127.2,,No,Yes,2.2
+264,Female,35,Central,Women's Economic Empowerment,,106.7,,Yes,Yes,1.8
+265,Female,44,Southern,Community Sanitation,,,3.5,No,No,1.9
+266,Female,25,Central,Community Sanitation,,,2.5,No,No,5.7
+267,Female,22,Central,Adolescent Health,57.6,,,Yes,No,1.0
+268,Female,39,Northern,Community Sanitation,,,4.4,Yes,No,8.0
+269,Male,19,Southern,Community Sanitation,,,4.3,No,Yes,6.1
+270,Female,31,Southern,Adolescent Health,76.9,,,No,No,7.5
+271,Female,22,Central,Adolescent Health,68.6,,,Yes,No,5.3
+272,Female,29,Northern,Community Sanitation,,,1.5,Yes,No,9.2
+273,Male,26,Northern,Women's Economic Empowerment,,121.89,,Yes,No,8.4
+274,Female,44,Southern,Women's Economic Empowerment,,172.78,,No,Yes,5.5
+275,Female,25,Northern,Women's Economic Empowerment,,87.7,,Yes,Yes,3.2
+276,Male,25,Southern,Women's Economic Empowerment,,145.01,,Yes,No,2.1
+277,Male,30,Central,Women's Economic Empowerment,,91.1,,Yes,Yes,8.6
+278,Male,37,Central,Adolescent Health,72.1,,,No,Yes,7.1
+279,Female,18,Southern,Women's Economic Empowerment,,43.2,,Yes,Yes,3.4
+280,Female,35,Northern,Adolescent Health,57.4,,,Yes,No,7.5
+281,Male,32,Central,Adolescent Health,57.4,,,No,Yes,3.8
+282,Male,16,Southern,Community Sanitation,,,1.0,No,Yes,3.3
+283,Female,44,Central,Community Sanitation,,,1.3,No,No,7.7
+284,Male,22,Southern,Community Sanitation,,,4.4,Yes,No,7.7
+285,Male,17,Northern,Community Sanitation,,,5.0,Yes,No,8.4
+286,Male,27,Central,Adolescent Health,64.3,,,Yes,No,8.6
+287,Female,25,Central,Women's Economic Empowerment,,61.9,,No,No,5.9
+288,Male,41,Central,Community Sanitation,,,3.8,No,Yes,3.3
+289,Female,22,Northern,Adolescent Health,54.9,,,No,Yes,6.4
+290,Female,23,Northern,Women's Economic Empowerment,,92.27,,No,Yes,3.7
+291,Female,24,Central,Community Sanitation,,,4.7,No,Yes,8.1
+292,Male,43,Northern,Women's Economic Empowerment,,90.05,,Yes,Yes,2.1
+293,Female,44,Northern,Community Sanitation,,,3.1,Yes,Yes,3.9
+294,Female,30,Southern,Adolescent Health,44.1,,,Yes,Yes,1.3
+295,Female,25,Southern,Women's Economic Empowerment,,102.81,,No,No,5.0
+296,Male,35,Southern,Community Sanitation,,,4.0,No,Yes,2.3
+297,Male,28,Central,Adolescent Health,45.7,,,Yes,Yes,9.8
+298,Male,19,Southern,Adolescent Health,73.4,,,Yes,Yes,4.2
+299,Male,19,Northern,Women's Economic Empowerment,,108.12,,No,Yes,8.1
+300,Female,22,Central,Women's Economic Empowerment,,152.53,,Yes,Yes,8.5
+301,Male,22,Central,Community Sanitation,,,3.0,No,Yes,1.8
+302,Female,24,Northern,Community Sanitation,,,4.3,No,Yes,7.0
+303,Female,42,Southern,Women's Economic Empowerment,,102.1,,Yes,Yes,4.1
+304,Female,24,Southern,Women's Economic Empowerment,,111.46,,Yes,No,3.7
+305,Female,29,Southern,Women's Economic Empowerment,,86.74,,Yes,No,7.8
+306,Male,35,Central,Women's Economic Empowerment,,123.88,,Yes,Yes,3.3
+307,Female,16,Central,Adolescent Health,77.6,,,Yes,Yes,3.8
+308,Female,36,Southern,Community Sanitation,,,2.2,No,Yes,7.8
+309,Female,36,Southern,Community Sanitation,,,4.4,No,Yes,4.1
+310,Female,23,Central,Community Sanitation,,,1.6,Yes,Yes,4.5
+311,Female,40,Northern,Community Sanitation,,,2.6,Yes,Yes,7.7
+312,Female,27,Northern,Community Sanitation,,,3.2,Yes,No,2.2
+313,Male,36,Central,Adolescent Health,61.0,,,No,Yes,7.2
+314,Male,32,Southern,Adolescent Health,43.9,,,Yes,Yes,3.9
+315,Female,15,Southern,Women's Economic Empowerment,,164.29,,No,No,8.6
+316,Male,37,Southern,Community Sanitation,,,3.5,No,No,6.6
+317,Male,15,Northern,Community Sanitation,,,4.4,No,Yes,1.1
+318,Female,29,Southern,Adolescent Health,79.5,,,No,No,2.2
+319,Male,40,Northern,Community Sanitation,,,1.0,No,No,7.8
+320,Female,35,Northern,Women's Economic Empowerment,,140.8,,No,Yes,3.0
+321,Female,37,Southern,Community Sanitation,,,4.4,No,Yes,1.2
+322,Female,30,Southern,Community Sanitation,,,1.5,No,No,7.6
+323,Female,43,Northern,Community Sanitation,,,4.1,No,Yes,7.1
+324,Female,41,Central,Women's Economic Empowerment,,43.52,,No,No,3.0
+325,Female,19,Northern,Women's Economic Empowerment,,119.18,,Yes,Yes,6.6
+326,Male,20,Northern,Adolescent Health,62.4,,,Yes,Yes,6.6
+327,Female,34,Southern,Community Sanitation,,,2.0,No,Yes,9.5
+328,Female,28,Northern,Adolescent Health,63.7,,,Yes,No,1.9
+329,Female,19,Northern,Women's Economic Empowerment,,97.02,,Yes,Yes,2.5
+330,Male,29,Central,Women's Economic Empowerment,,61.76,,No,No,3.7
+331,Male,21,Northern,Community Sanitation,,,3.4,No,No,7.9
+332,Male,26,Northern,Adolescent Health,45.6,,,Yes,Yes,5.2
+333,Female,42,Northern,Women's Economic Empowerment,,72.2,,No,Yes,4.3
+334,Female,17,Central,Women's Economic Empowerment,,107.55,,Yes,Yes,4.4
+335,Male,36,Southern,Adolescent Health,71.1,,,Yes,No,5.6
+336,Female,33,Northern,Adolescent Health,78.1,,,No,Yes,3.9
+337,Male,35,Southern,Women's Economic Empowerment,,117.01,,Yes,Yes,7.1
+338,Male,43,Northern,Community Sanitation,,,3.0,Yes,No,1.2
+339,Female,34,Southern,Community Sanitation,,,3.1,No,No,6.4
+340,Male,17,Central,Community Sanitation,,,2.1,No,No,4.2
+341,Female,41,Northern,Community Sanitation,,,4.1,Yes,Yes,5.3
+342,Female,35,Central,Adolescent Health,67.8,,,No,Yes,7.8
+343,Male,23,Southern,Women's Economic Empowerment,,41.75,,No,No,1.3
+344,Male,15,Northern,Women's Economic Empowerment,,74.97,,No,Yes,2.9
+345,Male,44,Northern,Community Sanitation,,,1.1,Yes,No,5.6
+346,Male,30,Central,Women's Economic Empowerment,,112.79,,No,Yes,6.6
+347,Female,21,Central,Adolescent Health,80.3,,,No,Yes,2.7
+348,Female,23,Northern,Women's Economic Empowerment,,61.45,,No,Yes,2.8
+349,Female,41,Southern,Women's Economic Empowerment,,87.56,,Yes,Yes,6.6
+350,Female,23,Southern,Women's Economic Empowerment,,58.53,,Yes,No,7.5
+351,Female,30,Northern,Community Sanitation,,,3.8,Yes,No,5.0
+352,Male,20,Southern,Community Sanitation,,,2.8,No,Yes,5.0
+353,Female,37,Northern,Women's Economic Empowerment,,88.95,,No,No,4.6
+354,Male,36,Southern,Adolescent Health,64.7,,,No,Yes,3.3
+355,Female,37,Central,Women's Economic Empowerment,,53.12,,No,Yes,9.9
+356,Female,15,Central,Adolescent Health,89.4,,,Yes,Yes,6.6
+357,Female,35,Southern,Adolescent Health,48.3,,,No,Yes,4.2
+358,Male,27,Central,Adolescent Health,68.5,,,No,Yes,3.3
+359,Male,40,Northern,Adolescent Health,81.6,,,Yes,Yes,3.3
+360,Female,15,Central,Community Sanitation,,,3.6,No,No,3.9
+361,Male,42,Northern,Women's Economic Empowerment,,150.47,,Yes,Yes,6.0
+362,Male,23,Northern,Adolescent Health,59.5,,,No,Yes,6.2
+363,Female,31,Southern,Adolescent Health,71.7,,,Yes,No,7.0
+364,Male,20,Central,Women's Economic Empowerment,,126.04,,Yes,Yes,1.2
+365,Male,28,Central,Adolescent Health,63.8,,,No,Yes,6.2
+366,Male,21,Southern,Community Sanitation,,,2.9,Yes,No,6.2
+367,Male,21,Northern,Adolescent Health,61.9,,,No,Yes,9.3
+368,Male,39,Southern,Community Sanitation,,,2.1,Yes,No,3.1
+369,Female,39,Southern,Community Sanitation,,,1.1,No,No,1.4
+370,Female,19,Central,Adolescent Health,55.3,,,Yes,No,9.5
+371,Male,19,Northern,Women's Economic Empowerment,,118.18,,No,No,6.1
+372,Female,15,Northern,Community Sanitation,,,3.7,Yes,No,1.9
+373,Male,32,Northern,Adolescent Health,61.8,,,Yes,Yes,3.9
+374,Male,24,Southern,Women's Economic Empowerment,,121.04,,No,No,4.5
+375,Male,31,Southern,Community Sanitation,,,2.3,Yes,Yes,7.9
+376,Female,22,Southern,Adolescent Health,70.4,,,No,Yes,3.4
+377,Female,42,Southern,Adolescent Health,55.9,,,Yes,Yes,9.5
+378,Male,29,Northern,Adolescent Health,64.1,,,No,Yes,6.2
+379,Female,28,Central,Community Sanitation,,,4.3,Yes,Yes,1.9
+380,Male,36,Northern,Adolescent Health,71.4,,,No,Yes,5.6
+381,Female,35,Northern,Adolescent Health,37.2,,,No,Yes,6.3
+382,Male,44,Northern,Women's Economic Empowerment,,124.21,,Yes,Yes,9.6
+383,Female,29,Northern,Community Sanitation,,,4.3,Yes,Yes,9.2
+384,Female,38,Southern,Adolescent Health,75.1,,,Yes,Yes,9.5
+385,Male,33,Northern,Community Sanitation,,,1.1,No,No,6.8
+386,Male,18,Northern,Adolescent Health,59.8,,,No,No,6.8
+387,Male,20,Central,Adolescent Health,77.0,,,No,Yes,7.2
+388,Female,36,Northern,Women's Economic Empowerment,,67.68,,Yes,Yes,1.4
+389,Male,35,Central,Adolescent Health,81.3,,,Yes,No,3.4
+390,Female,17,Northern,Adolescent Health,90.6,,,Yes,Yes,3.3
+391,Female,28,Northern,Women's Economic Empowerment,,106.24,,Yes,No,8.0
+392,Male,37,Southern,Adolescent Health,73.1,,,Yes,Yes,2.5
+393,Male,44,Central,Adolescent Health,50.1,,,No,Yes,7.7
+394,Female,24,Northern,Women's Economic Empowerment,,103.79,,Yes,No,4.8
+395,Male,44,Southern,Adolescent Health,75.6,,,No,No,3.4
+396,Male,38,Central,Women's Economic Empowerment,,59.52,,Yes,Yes,9.1
+397,Female,44,Northern,Community Sanitation,,,2.0,Yes,Yes,3.7
+398,Female,24,Southern,Women's Economic Empowerment,,124.84,,No,Yes,8.0
+399,Male,19,Northern,Women's Economic Empowerment,,93.93,,No,Yes,7.8
+400,Male,43,Central,Adolescent Health,62.1,,,Yes,Yes,4.4

@@ -5,284 +5,276 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy import stats
 from scipy.stats import mannwhitneyu, chi2_contingency
+import io
+from datetime import datetime
+import tempfile
+import os
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image as RLImage
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import inch
+from reportlab.lib import colors as rl_colors
+from docx import Document
+from docx.shared import Inches
 
-# Set page config
+# --- BRAND COLORS & LOGO ---
+BRAND_COLORS = ['#0b71a1', '#8245aa', '#67b7d1', '#4f64ac']
+ORG_NAME = "FemAnalytica"
+LOGO_PATH = "femanalytica_logo.png"  # Save your provided logo as this file in the project root
+
 st.set_page_config(
-    page_title="Health Data Analysis",
-    page_icon="🏥",
+    page_title=f"{ORG_NAME} Gender Analysis Platform",
+    page_icon="🌍",
     layout="wide"
 )
 
-# Add title and description
-st.title("Health Data Analysis Dashboard")
-st.markdown("""
-This dashboard analyzes health outcomes, barriers to care, and chronic conditions by gender, region, and education level.
-Use the sidebar to customize the visualization and analysis.
-""")
+# --- HEADER & LOGO ---
+# Always use the provided FemAnalytica logo
+st.image(LOGO_PATH, width=350)
+st.markdown(f"<h1 style='color:{BRAND_COLORS[0]};'>{ORG_NAME} Gender Disaggregated Analysis Platform</h1>", unsafe_allow_html=True)
+st.markdown(f"<h4 style='color:{BRAND_COLORS[2]};'>Upload your data and explore gender differences with professional, branded visualizations.</h4>", unsafe_allow_html=True)
 
-# Read and prepare data
-@st.cache_data
-def load_data():
-    health_df = pd.read_csv('health_data.csv')
-    demo_df = pd.read_csv('demographics.csv')
-    
-    # Clean and merge datasets
-    health_df = health_df.drop_duplicates(subset=['id'])
-    demo_df = demo_df.drop_duplicates(subset=['id'])
-    
-    # Merge datasets
-    merged_df = pd.merge(health_df, demo_df, on='id', how='inner')
-    
-    # Map categorical variables
-    merged_df['gender'] = merged_df['gender'].map({1: 'Female', 2: 'Male'})
-    merged_df['region'] = merged_df['region'].map({1: 'North', 2: 'Central', 3: 'South'})
-    merged_df['education_level'] = merged_df['education_level'].map({1: 'None', 2: 'Primary', 3: 'Secondary', 4: 'Tertiary'})
-    return merged_df
+# --- FILE UPLOAD ---
+uploaded_file = st.sidebar.file_uploader("Upload your CSV dataset", type=["csv"])
+data_dict_file = st.sidebar.file_uploader("(Optional) Upload a data dictionary CSV", type=["csv"], key="dict")
 
-# Load data
-df = load_data()
+# No logo upload option; always use FemAnalytica logo
+logo_file = LOGO_PATH
 
-# Sidebar controls
-st.sidebar.header("Analysis Controls")
+data_dict = None
+if data_dict_file is not None:
+    data_dict = pd.read_csv(data_dict_file)
 
-# Select analysis type
-analysis_type = st.sidebar.selectbox(
-    "Select Analysis Type",
-    [
-        "Health Check Distribution",
-        "Barriers to Care",
-        "Chronic Conditions by Gender",
-        "Chronic Conditions by Region",
-        "Chronic Conditions by Education Level"
-    ]
-)
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+    st.success("File uploaded successfully!")
+    st.write("Preview of your data:")
+    st.dataframe(df.head())
 
-def perform_statistical_test(data1, data2, variable_name):
-    data1 = data1.dropna()
-    data2 = data2.dropna()
-    _, p1 = stats.normaltest(data1)
-    _, p2 = stats.normaltest(data2)
-    if p1 < 0.05 or p2 < 0.05:
-        stat, pval = mannwhitneyu(data1, data2, alternative='two-sided')
-        test_type = 'Mann-Whitney U'
+    # --- VARIABLE SELECTION ---
+    st.sidebar.header("Variable Selection")
+    columns = df.columns.tolist()
+    gender_col = st.sidebar.selectbox("Select the gender column", columns)
+    outcome_col = st.sidebar.selectbox("Select the outcome variable", [col for col in columns if col != gender_col])
+    group_col = st.sidebar.selectbox("(Optional) Group by another variable", ["None"] + [col for col in columns if col not in [gender_col, outcome_col]])
+    plot_types = st.sidebar.multiselect(
+        "Select plot types (choose one or more)",
+        ["Violin Plot", "Box Plot", "Bar Plot", "Scatter Plot", "Pie Chart", "Correlation Heatmap"],
+        default=["Violin Plot"]
+    )
+    report_format = st.sidebar.radio("Choose report format", ["PDF", "Word"])
+
+    # --- GENDER MAPPING ---
+    gender_values = df[gender_col].dropna().unique()
+    gender_map = {}
+    for val in gender_values:
+        gender_map[val] = st.sidebar.selectbox(f"Map value '{val}' to:", ['Female', 'Male', 'Other'], key=f"gender_{val}")
+    df['gender_analysis'] = df[gender_col].map(gender_map)
+    gendered_df = df[df['gender_analysis'].isin(['Male', 'Female'])]
+
+    # --- OUTCOME TYPE ---
+    outcome_type = 'numeric' if np.issubdtype(df[outcome_col].dropna().dtype, np.number) else 'categorical'
+    st.write(f"Outcome variable '{outcome_col}' detected as: {outcome_type}")
+    if data_dict is not None and outcome_col in data_dict.columns:
+        st.info(f"Description: {data_dict[outcome_col].values[0]}")
+
+    # --- VISUALIZATION & NARRATIVE ---
+    st.header(f"Gender Disaggregated Analysis for '{outcome_col}'")
+    plot_narratives = []
+    plot_images = []
+    def plot_for_group(sub_df, group_val=None):
+        for plot_type in plot_types:
+            buf = io.BytesIO()
+            group_label = f" ({group_col}: {group_val})" if group_val is not None else ""
+            if plot_type == "Violin Plot" and outcome_type == 'numeric':
+                fig, ax = plt.subplots()
+                sns.violinplot(data=sub_df, x='gender_analysis', y=outcome_col, hue='gender_analysis', palette=BRAND_COLORS[:2], legend=False)
+                plt.title(f"Violin Plot of {outcome_col} by Gender{group_label}")
+                plt.xlabel('Gender')
+                plt.ylabel(outcome_col)
+                st.pyplot(fig)
+                fig.savefig(buf, format='png')
+                plot_images.append((f"Violin Plot of {outcome_col} by Gender{group_label}", buf.getvalue()))
+                st.download_button(f"Download Violin Plot{group_label}", buf.getvalue(), file_name=f"violin_plot{group_label}.png", mime="image/png")
+                plot_narratives.append(f"The violin plot shows the distribution and spread of {outcome_col} for males and females{group_label}. Look for differences in the width and center of the distributions to spot gender differences.")
+            if plot_type == "Box Plot" and outcome_type == 'numeric':
+                fig, ax = plt.subplots()
+                sns.boxplot(data=sub_df, x='gender_analysis', y=outcome_col, hue='gender_analysis', palette=BRAND_COLORS[:2], legend=False)
+                plt.title(f"Box Plot of {outcome_col} by Gender{group_label}")
+                plt.xlabel('Gender')
+                plt.ylabel(outcome_col)
+                st.pyplot(fig)
+                fig.savefig(buf, format='png')
+                plot_images.append((f"Box Plot of {outcome_col} by Gender{group_label}", buf.getvalue()))
+                plot_narratives.append(f"The box plot compares the medians and interquartile ranges of {outcome_col} by gender{group_label}. Differences in box heights or medians highlight gender disparities.")
+            if plot_type == "Bar Plot" and outcome_type == 'categorical':
+                fig, ax = plt.subplots()
+                percent_tab = pd.crosstab(sub_df['gender_analysis'], sub_df[outcome_col], normalize='index') * 100
+                n_bars = percent_tab.shape[1]
+                percent_tab.T.plot(kind='bar', ax=ax, color=BRAND_COLORS[:n_bars])
+                plt.title(f"{outcome_col} by Gender (Percentage){group_label}")
+                plt.xlabel(outcome_col)
+                plt.ylabel('Percentage')
+                plt.legend(title='Gender')
+                st.pyplot(fig)
+                fig.savefig(buf, format='png')
+                plot_images.append((f"Bar Plot of {outcome_col} by Gender{group_label}", buf.getvalue()))
+                st.download_button(f"Download Bar Plot{group_label}", buf.getvalue(), file_name=f"bar_plot{group_label}.png", mime="image/png")
+                plot_narratives.append(f"The bar plot shows the percentage of each {outcome_col} category for males and females{group_label}. Differences in bar heights indicate gender differences in categorical outcomes.")
+            if plot_type == "Scatter Plot":
+                numeric_cols = [col for col in columns if np.issubdtype(df[col].dropna().dtype, np.number)]
+                if len(numeric_cols) >= 2:
+                    x_var = st.sidebar.selectbox("X variable for scatter", numeric_cols, index=0, key=f"scatter_x{group_label}")
+                    y_var = st.sidebar.selectbox("Y variable for scatter", numeric_cols, index=1 if len(numeric_cols) > 1 else 0, key=f"scatter_y{group_label}")
+                    fig, ax = plt.subplots()
+                    sns.scatterplot(data=sub_df, x=x_var, y=y_var, hue='gender_analysis', palette=BRAND_COLORS[:2])
+                    plt.title(f"Scatter Plot of {y_var} vs {x_var} by Gender{group_label}")
+                    st.pyplot(fig)
+                    fig.savefig(buf, format='png')
+                    plot_images.append((f"Scatter Plot of {y_var} vs {x_var} by Gender{group_label}", buf.getvalue()))
+                    st.download_button(f"Download Scatter Plot{group_label}", buf.getvalue(), file_name=f"scatter_plot{group_label}.png", mime="image/png")
+                    plot_narratives.append(f"The scatter plot visualizes the relationship between {x_var} and {y_var}, colored by gender{group_label}. Patterns or clusters may reveal gender-based trends.")
+                else:
+                    st.warning("Not enough numeric variables for a scatter plot.")
+            if plot_type == "Pie Chart":
+                pie_data = sub_df['gender_analysis'].value_counts()
+                fig, ax = plt.subplots()
+                ax.pie(pie_data, labels=pie_data.index, autopct='%1.1f%%', colors=BRAND_COLORS[:len(pie_data)])
+                plt.title(f"Gender Distribution{group_label}")
+                st.pyplot(fig)
+                fig.savefig(buf, format='png')
+                plot_images.append((f"Gender Distribution Pie Chart{group_label}", buf.getvalue()))
+                st.download_button(f"Download Pie Chart{group_label}", buf.getvalue(), file_name=f"pie_chart{group_label}.png", mime="image/png")
+                plot_narratives.append(f"The pie chart shows the proportion of males and females in your dataset{group_label}.")
+            if plot_type == "Correlation Heatmap":
+                numeric_cols = [col for col in columns if np.issubdtype(df[col].dropna().dtype, np.number)]
+                if len(numeric_cols) > 1:
+                    corr = sub_df[numeric_cols].corr()
+                    fig, ax = plt.subplots()
+                    sns.heatmap(corr, annot=True, cmap="Blues")
+                    plt.title(f"Correlation Heatmap (Numeric Variables){group_label}")
+                    st.pyplot(fig)
+                    fig.savefig(buf, format='png')
+                    plot_images.append((f"Correlation Heatmap{group_label}", buf.getvalue()))
+                    st.download_button(f"Download Heatmap{group_label}", buf.getvalue(), file_name=f"heatmap{group_label}.png", mime="image/png")
+                    plot_narratives.append(f"The correlation heatmap shows relationships between numeric variables{group_label}. Strong correlations may differ by gender.")
+                else:
+                    st.warning("Not enough numeric variables for a heatmap.")
+
+    if group_col != "None":
+        st.subheader(f"Breakdown by {group_col}")
+        for group_val in gendered_df[group_col].dropna().unique():
+            st.markdown(f"**{group_col}: {group_val}**")
+            sub_df = gendered_df[gendered_df[group_col] == group_val]
+            plot_for_group(sub_df, group_val)
     else:
-        stat, pval = stats.ttest_ind(data1, data2)
-        test_type = 't-test'
-    return {
-        'variable': variable_name,
-        'test_type': test_type,
-        'statistic': stat,
-        'p_value': pval
-    }
+        plot_for_group(gendered_df)
 
-def perform_chi_square_test(contingency_table):
-    chi2, p_value, dof, expected = chi2_contingency(contingency_table)
-    return {
-        'chi2': chi2,
-        'p_value': p_value,
-        'dof': dof
-    }
-
-# Main content area
-if analysis_type == "Health Check Distribution":
-    st.header("1. Health Check Distribution")
-    st.sidebar.header("Filters")
-    selected_gender = st.sidebar.multiselect(
-        "Select Gender",
-        options=df['gender'].dropna().unique(),
-        default=df['gender'].dropna().unique()
-    )
-    filtered_df = df[df['gender'].isin(selected_gender)]
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.violinplot(data=filtered_df, x='gender', y='recent_health_check', palette='Set2')
-    plt.title('Distribution of Recent Health Checks by Gender')
-    plt.xlabel('Gender')
-    plt.ylabel('Months Since Last Health Check')
-    st.pyplot(fig)
-    plt.close()
-    stats_df = filtered_df.groupby('gender')['recent_health_check'].agg(['mean', 'std', 'median', 'count']).round(2)
-    st.write("Summary Statistics:")
-    st.dataframe(stats_df)
-    male_data = filtered_df[filtered_df['gender'] == 'Male']['recent_health_check']
-    female_data = filtered_df[filtered_df['gender'] == 'Female']['recent_health_check']
-    test_result = perform_statistical_test(male_data, female_data, 'recent_health_check')
-    st.write("Statistical Test Results:")
-    st.write(f"Test Type: {test_result['test_type']}")
-    st.write(f"Statistic: {test_result['statistic']:.4f}")
-    st.write(f"p-value: {test_result['p_value']:.4f}")
-    if 'Male' in stats_df.index and 'Female' in stats_df.index:
-        male_mean = stats_df.loc['Male', 'mean']
-        female_mean = stats_df.loc['Female', 'mean']
-        st.write(f"""
-        **Analysis:** On average, males had {male_mean:.1f} months since their last health check, 
-        while females had {female_mean:.1f} months. The statistical test (p-value: {test_result['p_value']:.4f}) 
-        suggests that this difference is {'not ' if test_result['p_value'] > 0.05 else ''}statistically significant.
+    # --- STATISTICAL TESTS & NARRATIVE ---
+    st.subheader("Statistical Test & Narrative")
+    if outcome_type == 'numeric':
+        male_data = gendered_df[gendered_df['gender_analysis'] == 'Male'][outcome_col].dropna()
+        female_data = gendered_df[gendered_df['gender_analysis'] == 'Female'][outcome_col].dropna()
+        _, p1 = stats.normaltest(male_data) if len(male_data) > 7 else (None, 1)
+        _, p2 = stats.normaltest(female_data) if len(female_data) > 7 else (None, 1)
+        if p1 < 0.05 or p2 < 0.05:
+            stat, pval = mannwhitneyu(male_data, female_data, alternative='two-sided')
+            test_type = 'Mann-Whitney U'
+        else:
+            stat, pval = stats.ttest_ind(male_data, female_data)
+            test_type = 't-test'
+        st.write(f"Statistical Test: {test_type}")
+        st.write(f"Statistic: {stat:.4f}")
+        st.write(f"p-value: {pval:.4f}")
+        st.markdown(f"""
+        **Narrative:**
+        - The violin and box plots above show the distribution and central tendency of {outcome_col} for each gender.
+        - The average {outcome_col} for females is {female_data.mean():.2f}, for males is {male_data.mean():.2f}.
+        - The {test_type} p-value is {pval:.4f}, indicating that the difference is {'not ' if pval > 0.05 else ''}statistically significant.
         """)
+    else:
+        crosstab = pd.crosstab(gendered_df['gender_analysis'], gendered_df[outcome_col])
+        chi2, pval, dof, expected = chi2_contingency(crosstab)
+        st.write(f"Chi-square statistic: {chi2:.4f}")
+        st.write(f"p-value: {pval:.4f}")
+        st.write(f"Degrees of freedom: {dof}")
+        st.markdown(f"""
+        **Narrative:**
+        - The bar and pie charts above show the distribution of {outcome_col} by gender.
+        - The chi-square p-value is {pval:.4f}, indicating that the difference is {'not ' if pval > 0.05 else ''}statistically significant.
+        """)
+    for n in plot_narratives:
+        st.info(n)
 
-elif analysis_type == "Barriers to Care":
-    st.header("2. Barriers to Care Analysis")
-    st.sidebar.header("Filters")
-    selected_gender = st.sidebar.multiselect(
-        "Select Gender",
-        options=df['gender'].dropna().unique(),
-        default=df['gender'].dropna().unique()
-    )
-    filtered_df = df[df['gender'].isin(selected_gender)]
-    barriers_by_gender = pd.crosstab(filtered_df['gender'], filtered_df['reported_barriers_to_care'])
-    barriers_percent = pd.crosstab(filtered_df['gender'], filtered_df['reported_barriers_to_care'], normalize='index') * 100
-    chi2_result = perform_chi_square_test(barriers_by_gender)
-    fig, ax = plt.subplots(figsize=(12, 6))
-    barriers_percent.plot(kind='bar', ax=ax)
-    plt.title('Reported Barriers to Care by Gender (Percentage)')
-    plt.xlabel('Barriers to Care')
-    plt.ylabel('Percentage')
-    plt.legend(title='Gender', bbox_to_anchor=(1.05, 1))
-    plt.xticks(rotation=45, ha='right')
-    plt.tight_layout()
-    st.pyplot(fig)
-    plt.close()
-    st.write("Barriers to Care Percentages:")
-    st.dataframe(barriers_percent.round(1))
-    st.write("Chi-Square Test Results:")
-    st.write(f"Chi-square statistic: {chi2_result['chi2']:.4f}")
-    st.write(f"p-value: {chi2_result['p_value']:.4f}")
-    st.write(f"Degrees of freedom: {chi2_result['dof']}")
-    st.write("**Analysis by Barrier:**")
-    for barrier in barriers_percent.columns:
-        if 'Male' in barriers_percent.index and 'Female' in barriers_percent.index:
-            male_pct = barriers_percent.loc['Male', barrier]
-            female_pct = barriers_percent.loc['Female', barrier]
-            st.write(f"""
-            - **{barrier}:** {female_pct:.1f}% of females reported {barrier} as a barrier, 
-            compared to {male_pct:.1f}% of males. The chi-square test (p-value: {chi2_result['p_value']:.4f}) 
-            indicates that this difference is {'not ' if chi2_result['p_value'] > 0.05 else ''}statistically significant.
-            """)
+    # --- DOWNLOAD SUMMARY TABLE ---
+    st.download_button("Download Summary Table (CSV)", gendered_df.to_csv(index=False), file_name="summary_table.csv", mime="text/csv")
 
-elif analysis_type == "Chronic Conditions by Gender":
-    st.header("3. Chronic Conditions by Gender")
-    st.sidebar.header("Filters")
-    selected_gender = st.sidebar.multiselect(
-        "Select Gender",
-        options=df['gender'].dropna().unique(),
-        default=df['gender'].dropna().unique()
-    )
-    filtered_df = df[df['gender'].isin(selected_gender)]
-    conditions_by_gender = pd.crosstab(filtered_df['gender'], filtered_df['chronic_condition'])
-    conditions_percent = pd.crosstab(filtered_df['gender'], filtered_df['chronic_condition'], normalize='index') * 100
-    chi2_result = perform_chi_square_test(conditions_by_gender)
-    fig, ax = plt.subplots(figsize=(12, 6))
-    conditions_percent.plot(kind='bar', ax=ax)
-    plt.title('Chronic Conditions by Gender (Percentage)')
-    plt.xlabel('Chronic Condition')
-    plt.ylabel('Percentage')
-    plt.legend(title='Gender', bbox_to_anchor=(1.05, 1))
-    plt.xticks(rotation=45, ha='right')
-    plt.tight_layout()
-    st.pyplot(fig)
-    plt.close()
-    st.write("Chronic Conditions Percentages:")
-    st.dataframe(conditions_percent.round(1))
-    st.write("Chi-Square Test Results:")
-    st.write(f"Chi-square statistic: {chi2_result['chi2']:.4f}")
-    st.write(f"p-value: {chi2_result['p_value']:.4f}")
-    st.write(f"Degrees of freedom: {chi2_result['dof']}")
-    st.write("**Analysis by Condition:**")
-    for condition in conditions_percent.columns:
-        if 'Male' in conditions_percent.index and 'Female' in conditions_percent.index:
-            male_pct = conditions_percent.loc['Male', condition]
-            female_pct = conditions_percent.loc['Female', condition]
-            st.write(f"""
-            - **{condition}:** {female_pct:.1f}% of females reported {condition}, 
-            compared to {male_pct:.1f}% of males. The chi-square test (p-value: {chi2_result['p_value']:.4f}) 
-            indicates that this difference is {'not ' if chi2_result['p_value'] > 0.05 else ''}statistically significant.
-            """)
+    # --- GENERATE REPORT ---
+    st.subheader("Generate and Download Report")
+    if st.button("Generate Report"):
+        now = datetime.now().strftime("%Y-%m-%d %H:%M")
+        if report_format == "PDF":
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmpfile:
+                doc = SimpleDocTemplate(tmpfile.name, pagesize=letter)
+                styles = getSampleStyleSheet()
+                story = []
+                # Logo
+                story.append(RLImage(LOGO_PATH, width=2*inch, height=2*inch))
+                # Title
+                story.append(Paragraph(f"<b>{ORG_NAME} Gender Disaggregated Analysis Report</b>", styles['Title']))
+                story.append(Paragraph(f"Generated: {now}", styles['Normal']))
+                story.append(Spacer(1, 12))
+                # Selections
+                story.append(Paragraph(f"<b>Outcome:</b> {outcome_col}", styles['Normal']))
+                story.append(Paragraph(f"<b>Gender column:</b> {gender_col}", styles['Normal']))
+                story.append(Paragraph(f"<b>Group by:</b> {group_col}", styles['Normal']))
+                story.append(Spacer(1, 12))
+                # Plots
+                for title, img_bytes in plot_images:
+                    story.append(Paragraph(f"<b>{title}</b>", styles['Heading2']))
+                    img_buf = io.BytesIO(img_bytes)
+                    story.append(RLImage(img_buf, width=5*inch, height=3*inch))
+                    story.append(Spacer(1, 12))
+                # Narratives
+                for n in plot_narratives:
+                    story.append(Paragraph(n, styles['Normal']))
+                # Powered by FemAnalytica
+                story.append(Spacer(1, 24))
+                story.append(Paragraph(f"<b>This analysis was powered by {ORG_NAME}.</b>", styles['Normal']))
+                doc.build(story)
+                with open(tmpfile.name, "rb") as f:
+                    st.download_button("Download PDF Report", f.read(), file_name="FemAnalytica_Gender_Report.pdf", mime="application/pdf")
+        else:  # Word
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".docx") as tmpfile:
+                doc = Document()
+                # Logo
+                doc.add_picture(LOGO_PATH, width=Inches(2))
+                doc.add_heading(f"{ORG_NAME} Gender Disaggregated Analysis Report", 0)
+                doc.add_paragraph(f"Generated: {now}")
+                doc.add_paragraph(f"Outcome: {outcome_col}")
+                doc.add_paragraph(f"Gender column: {gender_col}")
+                doc.add_paragraph(f"Group by: {group_col}")
+                for title, img_bytes in plot_images:
+                    doc.add_heading(title, level=2)
+                    img_buf = io.BytesIO(img_bytes)
+                    img_path = os.path.join(tempfile.gettempdir(), f"plot_{title.replace(' ','_')}.png")
+                    with open(img_path, "wb") as f:
+                        f.write(img_bytes)
+                    doc.add_picture(img_path, width=Inches(5))
+                for n in plot_narratives:
+                    doc.add_paragraph(n)
+                # Powered by FemAnalytica
+                doc.add_paragraph("")
+                doc.add_paragraph(f"This analysis was powered by {ORG_NAME}.")
+                doc.save(tmpfile.name)
+                with open(tmpfile.name, "rb") as f:
+                    st.download_button("Download Word Report", f.read(), file_name="FemAnalytica_Gender_Report.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+else:
+    st.info("Please upload a CSV file to begin analysis.")
 
-elif analysis_type == "Chronic Conditions by Region":
-    st.header("4. Chronic Conditions by Region")
-    st.sidebar.header("Filters")
-    selected_region = st.sidebar.multiselect(
-        "Select Region",
-        options=df['region'].dropna().unique(),
-        default=df['region'].dropna().unique()
-    )
-    filtered_df = df[df['region'].isin(selected_region)]
-    conditions_by_region = pd.crosstab(filtered_df['region'], filtered_df['chronic_condition'])
-    conditions_percent = pd.crosstab(filtered_df['region'], filtered_df['chronic_condition'], normalize='index') * 100
-    chi2_result = perform_chi_square_test(conditions_by_region)
-    fig, ax = plt.subplots(figsize=(12, 6))
-    conditions_percent.plot(kind='bar', ax=ax)
-    plt.title('Chronic Conditions by Region (Percentage)')
-    plt.xlabel('Chronic Condition')
-    plt.ylabel('Percentage')
-    plt.legend(title='Region', bbox_to_anchor=(1.05, 1))
-    plt.xticks(rotation=45, ha='right')
-    plt.tight_layout()
-    st.pyplot(fig)
-    plt.close()
-    st.write("Chronic Conditions Percentages:")
-    st.dataframe(conditions_percent.round(1))
-    st.write("Chi-Square Test Results:")
-    st.write(f"Chi-square statistic: {chi2_result['chi2']:.4f}")
-    st.write(f"p-value: {chi2_result['p_value']:.4f}")
-    st.write(f"Degrees of freedom: {chi2_result['dof']}")
-    st.write("**Analysis by Condition:**")
-    for condition in conditions_percent.columns:
-        for region in conditions_percent.index:
-            pct = conditions_percent.loc[region, condition]
-            st.write(f"- **{condition} in {region}:** {pct:.1f}% of respondents in {region} reported {condition}.")
-    st.write(f"The chi-square test (p-value: {chi2_result['p_value']:.4f}) indicates that differences by region are {'not ' if chi2_result['p_value'] > 0.05 else ''}statistically significant.")
-
-elif analysis_type == "Chronic Conditions by Education Level":
-    st.header("5. Chronic Conditions by Education Level")
-    st.sidebar.header("Filters")
-    selected_edu = st.sidebar.multiselect(
-        "Select Education Level",
-        options=df['education_level'].dropna().unique(),
-        default=df['education_level'].dropna().unique()
-    )
-    filtered_df = df[df['education_level'].isin(selected_edu)]
-    conditions_by_edu = pd.crosstab(filtered_df['education_level'], filtered_df['chronic_condition'])
-    conditions_percent = pd.crosstab(filtered_df['education_level'], filtered_df['chronic_condition'], normalize='index') * 100
-    chi2_result = perform_chi_square_test(conditions_by_edu)
-    fig, ax = plt.subplots(figsize=(12, 6))
-    conditions_percent.plot(kind='bar', ax=ax)
-    plt.title('Chronic Conditions by Education Level (Percentage)')
-    plt.xlabel('Chronic Condition')
-    plt.ylabel('Percentage')
-    plt.legend(title='Education Level', bbox_to_anchor=(1.05, 1))
-    plt.xticks(rotation=45, ha='right')
-    plt.tight_layout()
-    st.pyplot(fig)
-    plt.close()
-    st.write("Chronic Conditions Percentages:")
-    st.dataframe(conditions_percent.round(1))
-    st.write("Chi-Square Test Results:")
-    st.write(f"Chi-square statistic: {chi2_result['chi2']:.4f}")
-    st.write(f"p-value: {chi2_result['p_value']:.4f}")
-    st.write(f"Degrees of freedom: {chi2_result['dof']}")
-    st.write("**Analysis by Condition:**")
-    for condition in conditions_percent.columns:
-        for edu in conditions_percent.index:
-            pct = conditions_percent.loc[edu, condition]
-            st.write(f"- **{condition} for {edu}:** {pct:.1f}% of respondents with {edu} education reported {condition}.")
-    st.write(f"The chi-square test (p-value: {chi2_result['p_value']:.4f}) indicates that differences by education level are {'not ' if chi2_result['p_value'] > 0.05 else ''}statistically significant.")
-
-# Add footer with data information
-st.sidebar.markdown("---")
-st.sidebar.markdown("""
-### Data Information
-- Health Check: Months since last health check
-- Barriers to Care: Reported obstacles to healthcare access
-- Chronic Conditions: Reported chronic health conditions
-- Region: 1=North, 2=Central, 3=South
-- Education Level: 1=None, 2=Primary, 3=Secondary, 4=Tertiary
-- Gender: 1=Female, 2=Male
-""")
-
-# Key Findings
-st.header("Key Findings")
-st.write("""
-1. **Health Check Patterns:** The analysis reveals differences in health check frequency between genders, with detailed statistical significance.
-2. **Barriers to Care:** The data shows distinct patterns in reported barriers between males and females, with specific percentages and statistical tests for each barrier type.
-3. **Chronic Conditions:** The prevalence of different chronic conditions varies by gender, region, and education level, with detailed breakdowns and statistical significance for each.
-""") 
+# --- FOOTER ---
+st.markdown(
+    f"""<hr style='border:1px solid {BRAND_COLORS[0]};'>\n
+    <div style='color:{BRAND_COLORS[2]};'><b>Powered by {ORG_NAME}</b>. For support, contact info@femanalytica.org</div>
+    """, unsafe_allow_html=True
+) 
