@@ -75,3 +75,8 @@ logs/
 .DS_Store
 Thumbs.db
 
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints
+
+# Streamlit temp
+.streamlit/config.toml
