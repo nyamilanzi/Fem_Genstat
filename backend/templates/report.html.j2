@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .metadata {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .metadata h2 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .metadata-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #bdc3c7;
+        }
+        .metadata-item:last-child {
+            border-bottom: none;
+        }
+        .metadata-label {
+            font-weight: bold;
+            color: #34495e;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #2c3e50;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+        .section h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #34495e;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e8f4f8;
+        }
+        .stat-highlight {
+            background-color: #e8f5e8;
+            font-weight: bold;
+        }
+        .test-result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+        .test-result h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .p-value {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .effect-size {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+        .suppressed {
+            color: #6c757d;
+            font-style: italic;
+        }
+        .warning {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #dc3545;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #17a2b8;
+        }
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ title }}</h1>
+            <div class="subtitle">{{ organization }}</div>
+            <div style="margin-top: 15px; padding: 10px; background: #E3F2FD; border-radius: 5px; color: #1A237E; font-size: 0.9em;">
+                <strong>Developed by FEMSTAT from Femanalytica</strong> - Professional Gender Analysis Platform
+            </div>
+        </div>
+
+        <div class="metadata">
+            <h2>Report Information</h2>
+            <div class="metadata-grid">
+                <div class="metadata-item">
+                    <span class="metadata-label">Authors:</span>
+                    <span>{{ authors | join(', ') }}</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Generated:</span>
+                    <span>{{ generation_date }}</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Dataset:</span>
+                    <span>{{ session_metadata.filename }}</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Total Rows:</span>
+                    <span>{{ session_metadata.total_rows }}</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Small Cell Threshold:</span>
+                    <span>{{ suppress_threshold }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Methods</h2>
+            <div class="info">
+                <h3>Data Processing</h3>
+                <p><strong>Missing Data Policy:</strong> {{ analysis_results.settings.missing_policy }}</p>
+                <p><strong>Gender Categories:</strong> {{ analysis_results.settings.categories_order | join(', ') }}</p>
+                <p><strong>Multiple Testing Correction:</strong> {{ 'Benjamini-Hochberg FDR' if analysis_results.settings.fdr else 'None' }}</p>
+            </div>
+            
+            <div class="info">
+                <h3>Statistical Tests</h3>
+                <ul>
+                    <li><strong>Continuous Variables:</strong> Welch's t-test (2 groups) or Welch's ANOVA (3+ groups) for normally distributed data; Mann-Whitney U test or Kruskal-Wallis test for non-normal data</li>
+                    <li><strong>Categorical Variables:</strong> Chi-square test of independence; Fisher's exact test for 2x2 tables with small expected frequencies</li>
+                    <li><strong>Effect Sizes:</strong> Cohen's d and Hedges' g for continuous variables; Cramér's V and odds ratios for categorical variables</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Gender Distribution</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Gender</th>
+                        <th>N</th>
+                        <th>Percent</th>
+                        <th>Missing %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for gender in analysis_results.by_gender %}
+                    <tr>
+                        <td>{{ gender.gender }}</td>
+                        <td>{{ gender.n }}</td>
+                        <td>{{ gender.pct }}%</td>
+                        <td>{{ gender.missing_pct }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if analysis_results.continuous %}
+        <div class="section">
+            <h2>Continuous Variables</h2>
+            {% for var in analysis_results.continuous %}
+            <div class="subsection">
+                <h3>{{ var.var }}</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Gender</th>
+                            <th>N</th>
+                            <th>Mean</th>
+                            <th>SD</th>
+                            <th>Median</th>
+                            <th>IQR</th>
+                            <th>Min</th>
+                            <th>Max</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stat in var.table %}
+                        <tr>
+                            <td>{{ stat.gender }}</td>
+                            <td>{{ stat.n }}</td>
+                            <td>{{ stat.mean }}</td>
+                            <td>{{ stat.sd }}</td>
+                            <td>{{ stat.median }}</td>
+                            <td>{{ stat.iqr }}</td>
+                            <td>{{ stat.min }}</td>
+                            <td>{{ stat.max }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% if var.test %}
+                <div class="test-result">
+                    <h4>Statistical Test: {{ var.test.name }}</h4>
+                    <p><strong>P-value:</strong> <span class="p-value">{{ var.test.p }}</span></p>
+                    {% if var.test.statistic %}
+                    <p><strong>Test Statistic:</strong> {{ var.test.statistic }}</p>
+                    {% endif %}
+                    {% if var.test.note %}
+                    <p><strong>Note:</strong> {{ var.test.note }}</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% if var.effects %}
+                <div class="effect-size">
+                    <h4>Effect Sizes</h4>
+                    {% for effect in var.effects %}
+                    <p><strong>{{ effect.name }}:</strong> {{ effect.value }}
+                    {% if effect.ci_lower and effect.ci_upper %}
+                    (95% CI: {{ effect.ci_lower }}, {{ effect.ci_upper }})
+                    {% endif %}
+                    {% if effect.interpretation %}
+                    - {{ effect.interpretation }}
+                    {% endif %}
+                    </p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if analysis_results.categorical %}
+        <div class="section">
+            <h2>Categorical Variables</h2>
+            {% for var in analysis_results.categorical %}
+            <div class="subsection">
+                <h3>{{ var.var }}</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Level</th>
+                            <th>Gender</th>
+                            <th>Count</th>
+                            <th>Percent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for level in var.table %}
+                        <tr>
+                            <td>{{ level.level }}</td>
+                            <td>{{ level.gender }}</td>
+                            <td>{% if level.n is string %}{{ level.n }}{% else %}{{ "%.0f"|format(level.n) }}{% endif %}</td>
+                            <td>{% if level.pct is string %}{{ level.pct }}{% else %}{{ "%.1f"|format(level.pct) }}{% endif %}%</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% if var.test %}
+                <div class="test-result">
+                    <h4>Statistical Test: {{ var.test.name }}</h4>
+                    <p><strong>P-value:</strong> <span class="p-value">{{ var.test.p }}</span></p>
+                    {% if var.test.statistic %}
+                    <p><strong>Test Statistic:</strong> {{ var.test.statistic }}</p>
+                    {% endif %}
+                    {% if var.test.note %}
+                    <p><strong>Note:</strong> {{ var.test.note }}</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% if var.effects %}
+                <div class="effect-size">
+                    <h4>Effect Sizes</h4>
+                    {% for effect in var.effects %}
+                    <p><strong>{{ effect.name }}:</strong> {{ effect.value }}
+                    {% if effect.ci_lower and effect.ci_upper %}
+                    (95% CI: {{ effect.ci_lower }}, {{ effect.ci_upper }})
+                    {% endif %}
+                    {% if effect.interpretation %}
+                    - {{ effect.interpretation }}
+                    {% endif %}
+                    </p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if analysis_results.missingness %}
+        <div class="section">
+            <h2>Missing Data Analysis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Gender</th>
+                        <th>Missing Count</th>
+                        <th>Missing %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for missing in analysis_results.missingness %}
+                    <tr>
+                        <td>{{ missing.var }}</td>
+                        <td>{{ missing.gender }}</td>
+                        <td>{{ missing.missing_n }}</td>
+                        <td>{{ missing.missing_pct }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        <div class="section">
+            <h2>Notes and Caveats</h2>
+            <div class="warning">
+                <h3>Small Cell Suppression</h3>
+                <p>Cells with counts less than {{ suppress_threshold }} have been suppressed to protect privacy. These are indicated as "&lt;{{ suppress_threshold }}" in tables and excluded from statistical tests.</p>
+            </div>
+            
+            <div class="info">
+                <h3>Statistical Assumptions</h3>
+                <ul>
+                    <li>Tests assume independent observations</li>
+                    <li>Continuous variables assume approximately normal distribution within groups (tested with Shapiro-Wilk or D'Agostino tests)</li>
+                    <li>Chi-square tests assume expected frequencies ≥ 5 in each cell</li>
+                    <li>Effect sizes should be interpreted in context of the research domain</li>
+                </ul>
+            </div>
+
+            {% if notes %}
+            <div class="info">
+                <h3>Additional Notes</h3>
+                <p>{{ notes }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if analysis_results.get('gender_bias') %}
+        <div class="section">
+            <h2>Gender Bias Assessment</h2>
+            
+            <div class="info" style="background: #E8F5E9; border-left-color: #4CAF50;">
+                <h3>Overall Summary</h3>
+                <p>{{ analysis_results.get('gender_bias', {}).get('overall_summary', 'No gender bias assessment available.') }}</p>
+            </div>
+            
+            {% if analysis_results.get('gender_bias', {}).get('statistical_disparities') %}
+            <div class="subsection">
+                <h3>Statistical Disparities</h3>
+                <p>The following variables showed statistically significant differences between gender groups (p &lt; 0.05):</p>
+                <ul>
+                    {% for disparity in analysis_results.get('gender_bias', {}).get('statistical_disparities', []) %}
+                    <li>
+                        <strong>{{ disparity.variable }}</strong> ({{ disparity.type }}):
+                        <ul>
+                            <li>P-value: {{ "%.4f"|format(disparity.p_value) if disparity.p_value is not string else disparity.p_value }}</li>
+                            {% if disparity.effect_size %}
+                            <li>Effect size: {{ disparity.effect_size }} - {{ disparity.effect_interpretation or "See interpretation below" }}</li>
+                            {% endif %}
+                            <li>Severity: <strong>{{ disparity.severity }}</strong></li>
+                            <li>Interpretation: {{ disparity.interpretation }}</li>
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            {% if analysis_results.get('gender_bias', {}).get('representation_gaps') %}
+                <div class="subsection">
+                    <h3>Representation Gaps</h3>
+                    <p>The following representation gaps were identified:</p>
+                    <ul>
+                        {% for gap in analysis_results.get('gender_bias', {}).get('representation_gaps', []) %}
+                    <li>{{ gap.interpretation }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            {% if analysis_results.get('gender_bias', {}).get('missing_data_bias') %}
+                <div class="subsection">
+                    <h3>Missing Data Bias</h3>
+                    <p>Differential missing data patterns were identified:</p>
+                    <ul>
+                        {% for bias in analysis_results.get('gender_bias', {}).get('missing_data_bias', []) %}
+                    <li>{{ bias.interpretation }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            {% if analysis_results.get('gender_bias', {}).get('practical_significance') %}
+                <div class="subsection">
+                    <h3>Practical Significance</h3>
+                    <p>Variables with substantial practical differences (&gt;20% relative difference):</p>
+                    <ul>
+                        {% for finding in analysis_results.get('gender_bias', {}).get('practical_significance', []) %}
+                    <li>{{ finding.interpretation }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            {% if analysis_results.get('gender_bias', {}).get('gender_transformative_insights') %}
+                <div class="info" style="background: #FFF3E0; border-left-color: #FF9800;">
+                    <h3>Gender Transformative Insights</h3>
+                    <ul>
+                        {% for insight in analysis_results.get('gender_bias', {}).get('gender_transformative_insights', []) %}
+                    <li>{{ insight }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            {% if analysis_results.get('gender_bias', {}).get('recommendations') %}
+                <div class="warning" style="background: #E1F5FE; border-left-color: #03A9F4;">
+                    <h3>Recommendations</h3>
+                    <ul>
+                        {% for recommendation in analysis_results.get('gender_bias', {}).get('recommendations', []) %}
+                    <li>{{ recommendation }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <div class="section">
+            <h2>Key Findings and Interpretations</h2>
+            
+            {% if analysis_results.continuous %}
+            <div class="subsection">
+                <h3>Continuous Variables - Summary</h3>
+                {% for var in analysis_results.continuous %}
+                <div class="test-result">
+                    <h4>{{ var.var }}</h4>
+                    {% set test = var.test %}
+                    {% if test and test.p is not string and test.p is not none %}
+                        {% if test.p < 0.05 %}
+                            <p><strong>Significant difference found:</strong> There is a statistically significant difference in {{ var.var }} between gender groups (p={{ "%.4f"|format(test.p) }}).</p>
+                            {% if var.effects %}
+                                {% for effect in var.effects %}
+                                    {% if effect.interpretation %}
+                                    <p><strong>Effect size interpretation:</strong> {{ effect.interpretation }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% else %}
+                            <p><strong>No significant difference:</strong> There is no statistically significant difference in {{ var.var }} between gender groups (p={{ "%.4f"|format(test.p) }}).</p>
+                        {% endif %}
+                    {% else %}
+                        <p>Statistical test results are not available for this variable.</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            {% if analysis_results.categorical %}
+            <div class="subsection">
+                <h3>Categorical Variables - Summary</h3>
+                {% for var in analysis_results.categorical %}
+                <div class="test-result">
+                    <h4>{{ var.var }}</h4>
+                    {% set test = var.test %}
+                    {% if test and test.p is not string and test.p is not none %}
+                        {% if test.p < 0.05 %}
+                            <p><strong>Significant association found:</strong> There is a statistically significant association between {{ var.var }} and gender (p={{ "%.4f"|format(test.p) }}), indicating gender-based differences in the distribution of this variable.</p>
+                            {% if var.effects %}
+                                {% for effect in var.effects %}
+                                    {% if effect.interpretation %}
+                                    <p><strong>Effect size interpretation:</strong> {{ effect.interpretation }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% else %}
+                            <p><strong>No significant association:</strong> There is no statistically significant association between {{ var.var }} and gender (p={{ "%.4f"|format(test.p) }}).</p>
+                        {% endif %}
+                    {% else %}
+                        <p>Statistical test results are not available for this variable.</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="footer">
+            <p>Report generated by <strong>FEMSTAT</strong> (from Femanalytica) on {{ generation_date }}</p>
+            <p>This report contains statistical analysis results and gender bias assessment. Results should be interpreted by qualified professionals using gender-transformative approaches.</p>
+            <p style="margin-top: 10px; font-size: 0.85em; color: #666;">Developed by FEMSTAT from Femanalytica - Professional Gender Analysis Platform</p>
+        </div>
+    </div>
+</body>
+</html>
+

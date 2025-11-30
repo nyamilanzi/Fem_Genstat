@@ -1,0 +1,151 @@
+{
+  "session_id": "7ee37d9feb3e6614_57103843",
+  "analysis_settings": {
+    "session_id": "7ee37d9feb3e6614_57103843",
+    "gender_col": "Gender",
+    "gender_map": [
+      {
+        "from_value": "Male",
+        "to_value": "male"
+      },
+      {
+        "from_value": "Female",
+        "to_value": "female"
+      }
+    ],
+    "categories_order": [
+      "female",
+      "male",
+      "other",
+      "missing"
+    ],
+    "vars_continuous": [
+      "Age",
+      "HealthKnowledgeScore",
+      "MonthlySavings",
+      "HouseholdSanitationScore",
+      "SatisfactionRating"
+    ],
+    "vars_categorical": [
+      "Region",
+      "ProgramType",
+      "ReportedEmpowerment"
+    ],
+    "weight_col": null,
+    "cluster_id": null,
+    "robust_se": false,
+    "missing_policy": "listwise",
+    "impute": null,
+    "suppress_threshold": 5,
+    "fdr": false
+  },
+  "continuous_results": [
+    {
+      "var": "Age",
+      "table": [],
+      "test": {
+        "name": "insufficient_data",
+        "p": 0.0,
+        "statistic": 0.0,
+        "df": null,
+        "assumptions_met": true,
+        "note": "Less than 2 groups with data"
+      },
+      "effects": []
+    },
+    {
+      "var": "HealthKnowledgeScore",
+      "table": [],
+      "test": {
+        "name": "insufficient_data",
+        "p": 0.0,
+        "statistic": 0.0,
+        "df": null,
+        "assumptions_met": true,
+        "note": "Less than 2 groups with data"
+      },
+      "effects": []
+    },
+    {
+      "var": "MonthlySavings",
+      "table": [],
+      "test": {
+        "name": "insufficient_data",
+        "p": 0.0,
+        "statistic": 0.0,
+        "df": null,
+        "assumptions_met": true,
+        "note": "Less than 2 groups with data"
+      },
+      "effects": []
+    },
+    {
+      "var": "HouseholdSanitationScore",
+      "table": [],
+      "test": {
+        "name": "insufficient_data",
+        "p": 0.0,
+        "statistic": 0.0,
+        "df": null,
+        "assumptions_met": true,
+        "note": "Less than 2 groups with data"
+      },
+      "effects": []
+    },
+    {
+      "var": "SatisfactionRating",
+      "table": [],
+      "test": {
+        "name": "insufficient_data",
+        "p": 0.0,
+        "statistic": 0.0,
+        "df": null,
+        "assumptions_met": true,
+        "note": "Less than 2 groups with data"
+      },
+      "effects": []
+    }
+  ],
+  "categorical_results": [
+    {
+      "var": "Region",
+      "table": [],
+      "test": {
+        "name": "insufficient_data",
+        "p": 0.0,
+        "statistic": 0.0,
+        "df": null,
+        "assumptions_met": true,
+        "note": "Insufficient data for contingency table"
+      },
+      "effects": []
+    },
+    {
+      "var": "ProgramType",
+      "table": [],
+      "test": {
+        "name": "insufficient_data",
+        "p": 0.0,
+        "statistic": 0.0,
+        "df": null,
+        "assumptions_met": true,
+        "note": "Insufficient data for contingency table"
+      },
+      "effects": []
+    },
+    {
+      "var": "ReportedEmpowerment",
+      "table": [],
+      "test": {
+        "name": "insufficient_data",
+        "p": 0.0,
+        "statistic": 0.0,
+        "df": null,
+        "assumptions_met": true,
+        "note": "Insufficient data for contingency table"
+      },
+      "effects": []
+    }
+  ],
+  "export_timestamp": "2025-09-05T21:24:30.745318"
+}

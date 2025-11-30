@@ -1,0 +1,219 @@
+{
+  "session_id": "ca9b56980abc9f0f_64512818",
+  "analysis_settings": {
+    "session_id": "ca9b56980abc9f0f_64512818",
+    "gender_col": "gender",
+    "gender_map": [
+      {
+        "from_value": "1",
+        "to_value": "female"
+      },
+      {
+        "from_value": "2",
+        "to_value": "male"
+      }
+    ],
+    "categories_order": [
+      "female",
+      "male",
+      "other",
+      "missing"
+    ],
+    "vars_continuous": [
+      "age"
+    ],
+    "vars_categorical": [
+      "region",
+      "education_level"
+    ],
+    "weight_col": null,
+    "cluster_id": null,
+    "robust_se": false,
+    "missing_policy": "listwise",
+    "impute": null,
+    "suppress_threshold": 5,
+    "fdr": false
+  },
+  "continuous_results": [
+    {
+      "var": "age",
+      "table": [
+        {
+          "gender": "female",
+          "n": 50,
+          "mean": 53.48,
+          "sd": 13.197,
+          "median": 56.0,
+          "iqr": 18.0,
+          "min": 31.0,
+          "max": 78.0
+        },
+        {
+          "gender": "male",
+          "n": 61,
+          "mean": 52.393,
+          "sd": 13.496,
+          "median": 51.0,
+          "iqr": 23.0,
+          "min": 23.0,
+          "max": 80.0
+        }
+      ],
+      "test": {
+        "name": "welch_ttest",
+        "p": 0.6701,
+        "statistic": 0.4272,
+        "df": 109,
+        "assumptions_met": true,
+        "note": "Welch's t-test (unequal variances assumed)"
+      },
+      "effects": [
+        {
+          "name": "Cohen's d",
+          "value": 0.081,
+          "ci_lower": null,
+          "ci_upper": null,
+          "interpretation": "negligible"
+        },
+        {
+          "name": "Hedges' g",
+          "value": 0.081,
+          "ci_lower": null,
+          "ci_upper": null,
+          "interpretation": "negligible"
+        }
+      ]
+    }
+  ],
+  "categorical_results": [
+    {
+      "var": "region",
+      "table": [
+        {
+          "level": "1.0",
+          "gender": "female",
+          "n": 19,
+          "pct": 38.0
+        },
+        {
+          "level": "3.0",
+          "gender": "female",
+          "n": 17,
+          "pct": 34.0
+        },
+        {
+          "level": "2.0",
+          "gender": "female",
+          "n": 14,
+          "pct": 28.0
+        },
+        {
+          "level": "1.0",
+          "gender": "male",
+          "n": 19,
+          "pct": 31.1
+        },
+        {
+          "level": "3.0",
+          "gender": "male",
+          "n": 20,
+          "pct": 32.8
+        },
+        {
+          "level": "2.0",
+          "gender": "male",
+          "n": 22,
+          "pct": 36.1
+        }
+      ],
+      "test": {
+        "name": "chi_square",
+        "p": 0.625,
+        "statistic": 0.9402,
+        "df": 2,
+        "assumptions_met": true,
+        "note": "Chi-square test of independence"
+      },
+      "effects": [
+        {
+          "name": "Cram\u00e9r's V",
+          "value": 0.092,
+          "ci_lower": null,
+          "ci_upper": null,
+          "interpretation": "negligible"
+        }
+      ]
+    },
+    {
+      "var": "education_level",
+      "table": [
+        {
+          "level": "2.0",
+          "gender": "female",
+          "n": 18,
+          "pct": 36.0
+        },
+        {
+          "level": "3.0",
+          "gender": "female",
+          "n": 17,
+          "pct": 34.0
+        },
+        {
+          "level": "1.0",
+          "gender": "female",
+          "n": 11,
+          "pct": 22.0
+        },
+        {
+          "level": "4.0",
+          "gender": "female",
+          "n": "<5",
+          "pct": "<threshold"
+        },
+        {
+          "level": "2.0",
+          "gender": "male",
+          "n": 22,
+          "pct": 36.1
+        },
+        {
+          "level": "3.0",
+          "gender": "male",
+          "n": 24,
+          "pct": 39.3
+        },
+        {
+          "level": "1.0",
+          "gender": "male",
+          "n": 13,
+          "pct": 21.3
+        },
+        {
+          "level": "4.0",
+          "gender": "male",
+          "n": "<5",
+          "pct": "<threshold"
+        }
+      ],
+      "test": {
+        "name": "chi_square",
+        "p": 0.7169,
+        "statistic": 1.3516,
+        "df": 3,
+        "assumptions_met": false,
+        "note": "Chi-square test of independence (some expected frequencies < 5, interpret with caution)"
+      },
+      "effects": [
+        {
+          "name": "Cram\u00e9r's V",
+          "value": 0.11,
+          "ci_lower": null,
+          "ci_upper": null,
+          "interpretation": "small"
+        }
+      ]
+    }
+  ],
+  "export_timestamp": "2025-11-30T14:29:15.440690"
+}

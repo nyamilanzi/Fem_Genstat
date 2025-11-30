@@ -1,0 +1,65 @@
+{
+  "session_id": "ca9b56980abc9f0f_57105687",
+  "analysis_settings": {
+    "session_id": "ca9b56980abc9f0f_57105687",
+    "gender_col": "gender",
+    "gender_map": [
+      {
+        "from_value": "1",
+        "to_value": "male"
+      },
+      {
+        "from_value": "2",
+        "to_value": "female"
+      }
+    ],
+    "categories_order": [
+      "male",
+      "female"
+    ],
+    "vars_continuous": [
+      "age"
+    ],
+    "vars_categorical": [
+      "education_level"
+    ],
+    "weight_col": null,
+    "cluster_id": null,
+    "robust_se": false,
+    "missing_policy": "listwise",
+    "impute": null,
+    "suppress_threshold": 5,
+    "fdr": false
+  },
+  "continuous_results": [
+    {
+      "var": "age",
+      "table": [],
+      "test": {
+        "name": "insufficient_data",
+        "p": 0.0,
+        "statistic": 0.0,
+        "df": null,
+        "assumptions_met": true,
+        "note": "Less than 2 groups with data"
+      },
+      "effects": []
+    }
+  ],
+  "categorical_results": [
+    {
+      "var": "education_level",
+      "table": [],
+      "test": {
+        "name": "insufficient_data",
+        "p": 0.0,
+        "statistic": 0.0,
+        "df": null,
+        "assumptions_met": true,
+        "note": "Insufficient data for contingency table"
+      },
+      "effects": []
+    }
+  ],
+  "export_timestamp": "2025-09-05T21:54:57.883555"
+}

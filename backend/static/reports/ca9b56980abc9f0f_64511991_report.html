@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gender Analysis Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .metadata {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .metadata h2 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .metadata-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #bdc3c7;
+        }
+        .metadata-item:last-child {
+            border-bottom: none;
+        }
+        .metadata-label {
+            font-weight: bold;
+            color: #34495e;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #2c3e50;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+        .section h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #34495e;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e8f4f8;
+        }
+        .stat-highlight {
+            background-color: #e8f5e8;
+            font-weight: bold;
+        }
+        .test-result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+        .test-result h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .p-value {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .effect-size {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+        .suppressed {
+            color: #6c757d;
+            font-style: italic;
+        }
+        .warning {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #dc3545;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #17a2b8;
+        }
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Gender Analysis Report</h1>
+            <div class="subtitle">Analysis Tool</div>
+        </div>
+
+        <div class="metadata">
+            <h2>Report Information</h2>
+            <div class="metadata-grid">
+                <div class="metadata-item">
+                    <span class="metadata-label">Authors:</span>
+                    <span>Analysis Tool</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Generated:</span>
+                    <span>2025-11-30 14:15:43</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Dataset:</span>
+                    <span>demographics.csv</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Total Rows:</span>
+                    <span>116</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Small Cell Threshold:</span>
+                    <span>5</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Methods</h2>
+            <div class="info">
+                <h3>Data Processing</h3>
+                <p><strong>Missing Data Policy:</strong> MissingPolicy.LISTWISE</p>
+                <p><strong>Gender Categories:</strong> female, male, other, missing</p>
+                <p><strong>Multiple Testing Correction:</strong> None</p>
+            </div>
+            
+            <div class="info">
+                <h3>Statistical Tests</h3>
+                <ul>
+                    <li><strong>Continuous Variables:</strong> Welch's t-test (2 groups) or Welch's ANOVA (3+ groups) for normally distributed data; Mann-Whitney U test or Kruskal-Wallis test for non-normal data</li>
+                    <li><strong>Categorical Variables:</strong> Chi-square test of independence; Fisher's exact test for 2x2 tables with small expected frequencies</li>
+                    <li><strong>Effect Sizes:</strong> Cohen's d and Hedges' g for continuous variables; Cramér's V and odds ratios for categorical variables</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Gender Distribution</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Gender</th>
+                        <th>N</th>
+                        <th>Percent</th>
+                        <th>Missing %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>female</td>
+                        <td>50</td>
+                        <td>45.05%</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>male</td>
+                        <td>61</td>
+                        <td>54.95%</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        
+        <div class="section">
+            <h2>Continuous Variables</h2>
+            
+            <div class="subsection">
+                <h3>id</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Gender</th>
+                            <th>N</th>
+                            <th>Mean</th>
+                            <th>SD</th>
+                            <th>Median</th>
+                            <th>IQR</th>
+                            <th>Min</th>
+                            <th>Max</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>female</td>
+                            <td>50</td>
+                            <td>52.82</td>
+                            <td>33.806</td>
+                            <td>54.0</td>
+                            <td>52.5</td>
+                            <td>1.0</td>
+                            <td>117.0</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>male</td>
+                            <td>61</td>
+                            <td>57.967</td>
+                            <td>33.568</td>
+                            <td>52.0</td>
+                            <td>59.0</td>
+                            <td>2.0</td>
+                            <td>116.0</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                
+                <div class="test-result">
+                    <h4>Statistical Test: mann_whitney</h4>
+                    <p><strong>P-value:</strong> <span class="p-value">0.4288</span></p>
+                    
+                    <p><strong>Test Statistic:</strong> 1391.0</p>
+                    
+                    
+                    <p><strong>Note:</strong> Mann-Whitney U test (non-parametric)</p>
+                    
+                </div>
+                
+
+                
+                <div class="effect-size">
+                    <h4>Effect Sizes</h4>
+                    
+                    <p><strong>Cohen's d:</strong> -0.153
+                    
+                    
+                    - negligible
+                    
+                    </p>
+                    
+                    <p><strong>Hedges' g:</strong> -0.152
+                    
+                    
+                    - negligible
+                    
+                    </p>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="subsection">
+                <h3>age</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Gender</th>
+                            <th>N</th>
+                            <th>Mean</th>
+                            <th>SD</th>
+                            <th>Median</th>
+                            <th>IQR</th>
+                            <th>Min</th>
+                            <th>Max</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>female</td>
+                            <td>50</td>
+                            <td>53.48</td>
+                            <td>13.197</td>
+                            <td>56.0</td>
+                            <td>18.0</td>
+                            <td>31.0</td>
+                            <td>78.0</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>male</td>
+                            <td>61</td>
+                            <td>52.393</td>
+                            <td>13.496</td>
+                            <td>51.0</td>
+                            <td>23.0</td>
+                            <td>23.0</td>
+                            <td>80.0</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                
+                <div class="test-result">
+                    <h4>Statistical Test: welch_ttest</h4>
+                    <p><strong>P-value:</strong> <span class="p-value">0.6701</span></p>
+                    
+                    <p><strong>Test Statistic:</strong> 0.4272</p>
+                    
+                    
+                    <p><strong>Note:</strong> Welch's t-test (unequal variances assumed)</p>
+                    
+                </div>
+                
+
+                
+                <div class="effect-size">
+                    <h4>Effect Sizes</h4>
+                    
+                    <p><strong>Cohen's d:</strong> 0.081
+                    
+                    
+                    - negligible
+                    
+                    </p>
+                    
+                    <p><strong>Hedges' g:</strong> 0.081
+                    
+                    
+                    - negligible
+                    
+                    </p>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+        
+
+        
+        <div class="section">
+            <h2>Categorical Variables</h2>
+            
+            <div class="subsection">
+                <h3>gender</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Level</th>
+                            <th>Gender</th>
+                            <th>Count</th>
+                            <th>Percent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>female</td>
+                            <td>female</td>
+                            <td>50</td>
+                            <td>100.0%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>male</td>
+                            <td>female</td>
+                            <td><5</td>
+                            <td><threshold%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>female</td>
+                            <td>male</td>
+                            <td><5</td>
+                            <td><threshold%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>male</td>
+                            <td>male</td>
+                            <td>61</td>
+                            <td>100.0%</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                
+                <div class="test-result">
+                    <h4>Statistical Test: chi_square</h4>
+                    <p><strong>P-value:</strong> <span class="p-value">0.0</span></p>
+                    
+                    <p><strong>Test Statistic:</strong> 106.9971</p>
+                    
+                    
+                    <p><strong>Note:</strong> Chi-square test of independence</p>
+                    
+                </div>
+                
+
+                
+                <div class="effect-size">
+                    <h4>Effect Sizes</h4>
+                    
+                    <p><strong>Cramér's V:</strong> 0.982
+                    
+                    
+                    - large
+                    
+                    </p>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="subsection">
+                <h3>region</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Level</th>
+                            <th>Gender</th>
+                            <th>Count</th>
+                            <th>Percent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>1.0</td>
+                            <td>female</td>
+                            <td>19</td>
+                            <td>38.0%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>3.0</td>
+                            <td>female</td>
+                            <td>17</td>
+                            <td>34.0%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>2.0</td>
+                            <td>female</td>
+                            <td>14</td>
+                            <td>28.0%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>1.0</td>
+                            <td>male</td>
+                            <td>19</td>
+                            <td>31.15%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>3.0</td>
+                            <td>male</td>
+                            <td>20</td>
+                            <td>32.79%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>2.0</td>
+                            <td>male</td>
+                            <td>22</td>
+                            <td>36.07%</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                
+                <div class="test-result">
+                    <h4>Statistical Test: chi_square</h4>
+                    <p><strong>P-value:</strong> <span class="p-value">0.625</span></p>
+                    
+                    <p><strong>Test Statistic:</strong> 0.9402</p>
+                    
+                    
+                    <p><strong>Note:</strong> Chi-square test of independence</p>
+                    
+                </div>
+                
+
+                
+                <div class="effect-size">
+                    <h4>Effect Sizes</h4>
+                    
+                    <p><strong>Cramér's V:</strong> 0.092
+                    
+                    
+                    - negligible
+                    
+                    </p>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="subsection">
+                <h3>education_level</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Level</th>
+                            <th>Gender</th>
+                            <th>Count</th>
+                            <th>Percent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>2.0</td>
+                            <td>female</td>
+                            <td>18</td>
+                            <td>36.0%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>3.0</td>
+                            <td>female</td>
+                            <td>17</td>
+                            <td>34.0%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>1.0</td>
+                            <td>female</td>
+                            <td>11</td>
+                            <td>22.0%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>4.0</td>
+                            <td>female</td>
+                            <td><5</td>
+                            <td><threshold%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>2.0</td>
+                            <td>male</td>
+                            <td>22</td>
+                            <td>36.07%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>3.0</td>
+                            <td>male</td>
+                            <td>24</td>
+                            <td>39.34%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>1.0</td>
+                            <td>male</td>
+                            <td>13</td>
+                            <td>21.31%</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>4.0</td>
+                            <td>male</td>
+                            <td><5</td>
+                            <td><threshold%</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                
+                <div class="test-result">
+                    <h4>Statistical Test: chi_square</h4>
+                    <p><strong>P-value:</strong> <span class="p-value">0.7169</span></p>
+                    
+                    <p><strong>Test Statistic:</strong> 1.3516</p>
+                    
+                    
+                    <p><strong>Note:</strong> Chi-square test of independence (some expected frequencies < 5, interpret with caution)</p>
+                    
+                </div>
+                
+
+                
+                <div class="effect-size">
+                    <h4>Effect Sizes</h4>
+                    
+                    <p><strong>Cramér's V:</strong> 0.11
+                    
+                    
+                    - small
+                    
+                    </p>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+        
+
+        
+        <div class="section">
+            <h2>Missing Data Analysis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Gender</th>
+                        <th>Missing Count</th>
+                        <th>Missing %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>id</td>
+                        <td>female</td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>id</td>
+                        <td>male</td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>age</td>
+                        <td>female</td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>age</td>
+                        <td>male</td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>gender</td>
+                        <td>female</td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>gender</td>
+                        <td>male</td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>region</td>
+                        <td>female</td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>region</td>
+                        <td>male</td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>education_level</td>
+                        <td>female</td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>education_level</td>
+                        <td>male</td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        
+
+        <div class="section">
+            <h2>Notes and Caveats</h2>
+            <div class="warning">
+                <h3>Small Cell Suppression</h3>
+                <p>Cells with counts less than 5 have been suppressed to protect privacy. These are indicated as "&lt;5" in tables and excluded from statistical tests.</p>
+            </div>
+            
+            <div class="info">
+                <h3>Statistical Assumptions</h3>
+                <ul>
+                    <li>Tests assume independent observations</li>
+                    <li>Continuous variables assume approximately normal distribution within groups (tested with Shapiro-Wilk or D'Agostino tests)</li>
+                    <li>Chi-square tests assume expected frequencies ≥ 5 in each cell</li>
+                    <li>Effect sizes should be interpreted in context of the research domain</li>
+                </ul>
+            </div>
+
+            
+            <div class="info">
+                <h3>Additional Notes</h3>
+                <p>Generated automatically</p>
+            </div>
+            
+        </div>
+
+        <div class="footer">
+            <p>Report generated by Gender Analysis Tool on 2025-11-30 14:15:43</p>
+            <p>This report contains statistical analysis results and should be interpreted by qualified professionals.</p>
+        </div>
+    </div>
+</body>
+</html>
