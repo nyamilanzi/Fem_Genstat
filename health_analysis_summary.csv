@@ -1,0 +1,5 @@
+,recent_health_check,recent_health_check,recent_health_check,recent_health_check,reported_barriers_to_care,chronic_condition
+,mean,std,median,count,<lambda>,<lambda>
+gender,,,,,,
+Female,1.98,1.64,2.0,55,"{'Distance': 0.43243243243243246, 'Cost': 0.24324324324324326, 'Time': 0.16216216216216217, 'Permission': 0.16216216216216217}","{'Hypertension': 0.5416666666666666, 'Diabetes': 0.4583333333333333}"
+Male,2.19,1.93,2.0,43,"{'Cost': 0.4074074074074074, 'Distance': 0.3333333333333333, 'Permission': 0.2222222222222222, 'Time': 0.037037037037037035}","{'Hypertension': 0.5428571428571428, 'Diabetes': 0.45714285714285713}"
